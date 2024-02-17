@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=37 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://src/old-system/rpg/health.gd" id="7_0gixn"]
 [ext_resource type="Theme" uid="uid://b7kuxx763de25" path="res://theme/theme.tres" id="7_01g6y"]
 [ext_resource type="Shader" path="res://src/circle.gdshader" id="7_85w35"]
+[ext_resource type="Script" path="res://src/HpBar.gd" id="7_abq4l"]
 [ext_resource type="Texture2D" uid="uid://bwve2nq30wldn" path="res://icon.svg" id="7_fdl4x"]
 [ext_resource type="Texture2D" uid="uid://cr5lgys0l5syn" path="res://assets/tilemap_packed.png" id="8_e4cu6"]
 [ext_resource type="Script" path="res://src/old-system/FrameFreeze.gd" id="8_s1lnb"]
@@ -27,6 +28,12 @@ shader_parameter/radius = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eafcc"]
 size = Vector2(12, 16)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12nwv"]
+bg_color = Color(0.541176, 0.117647, 0.117647, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qbgh"]
+bg_color = Color(0.219608, 0.788235, 0.117647, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ctc5y"]
 shader = ExtResource("4_p3cl5")
@@ -246,12 +253,6 @@ border_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3y46c"]
 bg_color = Color(0.439216, 0.254902, 0.729412, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12nwv"]
-bg_color = Color(0.321569, 0.129412, 0.129412, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qbgh"]
-bg_color = Color(0.788235, 0.117647, 0.117647, 1)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a3145"]
 shader = ExtResource("7_85w35")
 shader_parameter/outer_radius = 0.748
@@ -332,6 +333,22 @@ color = Color(1, 1, 1, 0.203922)
 wait_time = 0.5
 script = ExtResource("3_hvheh")
 
+[node name="HpBar" type="ProgressBar" parent="." node_paths=PackedStringArray("health")]
+custom_minimum_size = Vector2(15, 2)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -7.0
+offset_top = -24.0
+offset_right = 8.0
+offset_bottom = -22.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_12nwv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3qbgh")
+show_percentage = false
+script = ExtResource("7_abq4l")
+health = NodePath("../HurtBox/Health")
+
 [node name="Body" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_ctc5y")
 position = Vector2(0, -9)
@@ -390,13 +407,6 @@ theme_override_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2/MarginContainer"]
 layout_mode = 2
-
-[node name="HpBar" type="ProgressBar" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 3)
-layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_12nwv")
-theme_override_styles/fill = SubResource("StyleBoxFlat_3qbgh")
-show_percentage = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -549,10 +559,9 @@ position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_vmewj")
 disabled = true
 
-[node name="Health" type="Node" parent="HurtBox" node_paths=PackedStringArray("hp_bar")]
+[node name="Health" type="Node" parent="HurtBox"]
 script = ExtResource("7_0gixn")
 max_health = 15
-hp_bar = NodePath("../../CanvasLayer/Control2/MarginContainer/VBoxContainer/HpBar")
 
 [node name="FrameFreeze" type="Node" parent="HurtBox"]
 script = ExtResource("8_s1lnb")
