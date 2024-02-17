@@ -1,11 +1,15 @@
 extends CharacterBody2D
 
+signal died()
+signal chaos_meter_changed(value, max_value)
+
 @export var accel := 800
 @export var speed := 100
 @export var roll_speed := 300
 
+@export var max_chaos_meter := 100
 @export var chaos_meter_bar: ProgressBar
-@export var game_over: Control
+@export var gameover: Control
 
 @onready var roll_rate_limiter = $RollRateLimiter
 
@@ -18,14 +22,17 @@ extends CharacterBody2D
 
 @onready var chaos_meter := 0.0:
 	set(v):
-		chaos_meter = clamp(v, 0, chaos_meter_bar.max_value)
+		chaos_meter = clamp(v, 0, max_chaos_meter)
+		chaos_meter_changed.emit(v, max_chaos_meter)
 		chaos_meter_bar.value = v
 
 var rolling := false
 
 func _ready():
 	self.chaos_meter = 0.0
-	game_over.hide()
+	gameover.hide()
+	chaos_meter_bar.max_value = max_chaos_meter
+	chaos_meter_bar.value = 0
 	
 	player_input.just_pressed.connect(func(ev: InputEvent):
 		if ev.is_action_pressed("attack"):
@@ -42,7 +49,7 @@ func _ready():
 				await animation_player.animation_finished
 				rolling = false
 				
-		if ev.is_action_pressed("special_attack") and chaos_meter >= chaos_meter_bar.max_value:
+		if ev.is_action_pressed("special_attack") and chaos_meter >= max_chaos_meter:
 			self.chaos_meter = 0
 			special_hitbox.attack()
 	)
@@ -68,8 +75,12 @@ func _physics_process(delta):
 
 
 func _on_hit_box_hit():
+	self.chaos_meter += 5.0
+
+func _on_hurt_box_hit(dmg):
 	self.chaos_meter += 10.0
 
-
 func _on_health_zero_health():
-	game_over.show()
+	died.emit()
+	gameover.show()
+

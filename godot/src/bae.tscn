@@ -57,6 +57,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HurtBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_ddhmo"]
 resource_name = "idle"
@@ -73,6 +85,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HurtBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_hnuck"]
@@ -91,6 +115,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [2, 3, 4, 5]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HurtBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_ib6fy"]
 resource_name = "roll"
@@ -106,6 +142,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HurtBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y87iq"]
@@ -134,10 +182,10 @@ shader_parameter/fill_ratio = 1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vmewj"]
 size = Vector2(16, 20)
 
-[node name="Bae" type="CharacterBody2D" node_paths=PackedStringArray("chaos_meter_bar", "game_over") groups=["player"]]
+[node name="Bae" type="CharacterBody2D" node_paths=PackedStringArray("chaos_meter_bar", "gameover") groups=["player"]]
 script = ExtResource("1_uu8pv")
 chaos_meter_bar = NodePath("CanvasLayer/Control2/ProgressBar")
-game_over = NodePath("CanvasLayer/Control2/Gameover")
+gameover = NodePath("CanvasLayer/Gameover")
 
 [node name="RollRateLimiter" type="Timer" parent="."]
 script = ExtResource("3_hvheh")
@@ -203,6 +251,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("7_01g6y")
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control2"]
@@ -337,19 +386,32 @@ hframes = 34
 vframes = 24
 frame = 87
 
-[node name="Gameover" type="ColorRect" parent="CanvasLayer/Control2" node_paths=PackedStringArray("restart")]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="Label" type="Label" parent="CanvasLayer/Control2/VBoxContainer"]
+layout_mode = 2
+text = "Enemies"
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control2/VBoxContainer"]
+layout_mode = 2
+text = "Killed"
+
+[node name="Gameover" type="ColorRect" parent="CanvasLayer" node_paths=PackedStringArray("restart")]
 process_mode = 3
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("7_01g6y")
 color = Color(0, 0, 0, 0.560784)
 script = ExtResource("12_fcj8v")
 restart = NodePath("CenterContainer/VBoxContainer/Restart")
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control2/Gameover"]
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Gameover"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -357,16 +419,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2/Gameover/CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Gameover/CenterContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Control2/Gameover/CenterContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Gameover"
 horizontal_alignment = 1
 
-[node name="Restart" type="Button" parent="CanvasLayer/Control2/Gameover/CenterContainer/VBoxContainer"]
+[node name="Restart" type="Button" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Try again"
 
@@ -382,6 +444,7 @@ invincible_time = 0.5
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_vmewj")
+disabled = true
 
 [node name="Health" type="Node" parent="HurtBox"]
 script = ExtResource("7_0gixn")
@@ -395,4 +458,5 @@ script = ExtResource("9_bqdnm")
 node = NodePath("../../Body")
 
 [connection signal="hit" from="HandRoot/HitBox" to="." method="_on_hit_box_hit"]
+[connection signal="hit" from="HurtBox" to="." method="_on_hurt_box_hit"]
 [connection signal="zero_health" from="HurtBox/Health" to="." method="_on_health_zero_health"]
