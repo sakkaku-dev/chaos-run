@@ -247,11 +247,11 @@ _data = {
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ctury"]
-bg_color = Color(0.105882, 0.105882, 0.239216, 1)
+bg_color = Color(0.239216, 0.105882, 0.105882, 1)
 border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3y46c"]
-bg_color = Color(0.439216, 0.254902, 0.729412, 1)
+bg_color = Color(0.729412, 0.254902, 0.254902, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a3145"]
 shader = ExtResource("7_85w35")
