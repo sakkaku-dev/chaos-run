@@ -1,16 +1,30 @@
-[gd_scene load_steps=16 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=28 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
 [ext_resource type="Script" path="res://src/bae.gd" id="1_uu8pv"]
 [ext_resource type="Script" path="res://src/old-system/rpg/HitBox.gd" id="2_e1oce"]
 [ext_resource type="Script" path="res://src/old-system/rpg/rate_limiter.gd" id="3_hvheh"]
+[ext_resource type="Script" path="res://src/old-system/rpg/Hurtbox.gd" id="4_ath4u"]
+[ext_resource type="Shader" path="res://src/old-system/shaders/hit.gdshader" id="4_p3cl5"]
+[ext_resource type="Script" path="res://src/old-system/rpg/health.gd" id="7_0gixn"]
+[ext_resource type="Shader" path="res://src/circle.gdshader" id="7_85w35"]
+[ext_resource type="Texture2D" uid="uid://bwve2nq30wldn" path="res://icon.svg" id="7_fdl4x"]
+[ext_resource type="Texture2D" uid="uid://cr5lgys0l5syn" path="res://assets/tilemap_packed.png" id="8_e4cu6"]
+[ext_resource type="Script" path="res://src/old-system/FrameFreeze.gd" id="8_s1lnb"]
+[ext_resource type="Script" path="res://src/ShaderHitFlash.gd" id="9_bqdnm"]
+[ext_resource type="Script" path="res://src/CircleTimer.gd" id="9_c31dr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xkbdw"]
 radius = 98.5089
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eafcc"]
 size = Vector2(12, 16)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ctc5y"]
+shader = ExtResource("4_p3cl5")
+shader_parameter/enable = false
+shader_parameter/hit_color = Color(1, 1, 1, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_280xg"]
 size = Vector2(14, 4)
@@ -107,6 +121,17 @@ border_color = Color(0, 0, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3y46c"]
 bg_color = Color(0.729412, 0.270588, 0.254902, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a3145"]
+shader = ExtResource("7_85w35")
+shader_parameter/outer_radius = 0.748
+shader_parameter/inner_radius = 0.372
+shader_parameter/turn = 0.0
+shader_parameter/blur = 0.0
+shader_parameter/fill_ratio = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vmewj"]
+size = Vector2(16, 20)
+
 [node name="Bae" type="CharacterBody2D" node_paths=PackedStringArray("chaos_meter_bar") groups=["player"]]
 script = ExtResource("1_uu8pv")
 chaos_meter_bar = NodePath("CanvasLayer/ProgressBar")
@@ -114,17 +139,21 @@ chaos_meter_bar = NodePath("CanvasLayer/ProgressBar")
 [node name="RollRateLimiter" type="Timer" parent="."]
 script = ExtResource("3_hvheh")
 
-[node name="SpecialHitBox" type="Area2D" parent="."]
+[node name="SpecialHitBox" type="Area2D" parent="." node_paths=PackedStringArray("rate_limiter")]
 position = Vector2(0, -7)
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("2_e1oce")
 damage = 6
 knockback_force = 300
+rate_limiter = NodePath("RateLimiter2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpecialHitBox"]
 shape = SubResource("CircleShape2D_xkbdw")
 disabled = true
+
+[node name="RateLimiter2" type="Timer" parent="SpecialHitBox"]
+script = ExtResource("3_hvheh")
 
 [node name="HandRoot" type="Node2D" parent="."]
 position = Vector2(0, -7)
@@ -146,6 +175,7 @@ wait_time = 0.5
 script = ExtResource("3_hvheh")
 
 [node name="Body" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ctc5y")
 position = Vector2(0, -9)
 texture = ExtResource("1_pkb8e")
 hframes = 8
@@ -175,5 +205,144 @@ theme_override_styles/background = SubResource("StyleBoxFlat_ctury")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3y46c")
 value = 50.0
 show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("7_fdl4x")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MarginContainer/HBoxContainer/TextureRect" node_paths=PackedStringArray("timer")]
+material = SubResource("ShaderMaterial_a3145")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_c31dr")
+timer = NodePath("../../../../../HandRoot/HitBox/RateLimiter")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/MarginContainer/HBoxContainer/TextureRect/MarginContainer"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_e4cu6")
+offset = Vector2(-3, 3)
+hframes = 34
+vframes = 24
+frame = 77
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("7_fdl4x")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/MarginContainer/HBoxContainer/TextureRect2" node_paths=PackedStringArray("timer")]
+material = SubResource("ShaderMaterial_a3145")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_c31dr")
+timer = NodePath("../../../../../RollRateLimiter")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/TextureRect2"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/MarginContainer/HBoxContainer/TextureRect2/MarginContainer"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_e4cu6")
+offset = Vector2(-3, 3)
+hframes = 34
+vframes = 24
+frame = 78
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("7_fdl4x")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/MarginContainer/HBoxContainer/TextureRect3" node_paths=PackedStringArray("timer")]
+material = SubResource("ShaderMaterial_a3145")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_c31dr")
+timer = NodePath("../../../../../SpecialHitBox/RateLimiter2")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/HBoxContainer/TextureRect3"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/MarginContainer/HBoxContainer/TextureRect3/MarginContainer"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("8_e4cu6")
+offset = Vector2(-3, 3)
+hframes = 34
+vframes = 24
+frame = 87
+
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "frame_freeze", "hit_flash")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_ath4u")
+health = NodePath("Health")
+frame_freeze = NodePath("FrameFreeze")
+hit_flash = NodePath("ShaderHitFlash")
+invincible_time = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_vmewj")
+
+[node name="Health" type="Node" parent="HurtBox"]
+script = ExtResource("7_0gixn")
+max_health = 10
+
+[node name="FrameFreeze" type="Node" parent="HurtBox"]
+script = ExtResource("8_s1lnb")
+
+[node name="ShaderHitFlash" type="Node" parent="HurtBox" node_paths=PackedStringArray("node")]
+script = ExtResource("9_bqdnm")
+node = NodePath("../../Body")
 
 [connection signal="hit" from="HandRoot/HitBox" to="." method="_on_hit_box_hit"]

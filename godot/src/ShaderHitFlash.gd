@@ -1,3 +1,4 @@
+class_name ShaderHitFlash
 extends HitFlash2D
 
 func _set_hit_flash(mat: ShaderMaterial, enable: bool):
