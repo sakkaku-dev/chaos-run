@@ -692,6 +692,7 @@ script = ExtResource("7_jguxi")
 offset_right = 32.0
 offset_bottom = 32.0
 theme = ExtResource("8_5mca8")
+theme_override_constants/separation = 0
 
 [node name="Enemies" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2

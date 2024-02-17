@@ -7,6 +7,7 @@ extends Area2D
 @export var hit_flash: HitFlash2D
 
 @export var invincible_time := 0.0
+@export var collision: CollisionShape2D
 
 signal hit(dmg)
 signal knockback(dir)
@@ -17,6 +18,8 @@ func damage(dmg: int, knockback_force: Vector2):
 	if invincible:
 		return false
 	
+	if collision:
+		collision.set_deferred("disabled", true)
 	invincible = true
 	hit.emit(dmg)
 	if knockback_force:
@@ -31,5 +34,9 @@ func damage(dmg: int, knockback_force: Vector2):
 	if frame_freeze and not health.is_dead():
 		frame_freeze.freeze()
 	
-	get_tree().create_timer(invincible_time).timeout.connect(func(): invincible = false)
+	get_tree().create_timer(invincible_time).timeout.connect(func():
+		if collision:
+			collision.set_deferred("disabled", false)
+		invincible = false
+	)
 	return true

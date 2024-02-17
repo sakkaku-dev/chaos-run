@@ -82,7 +82,7 @@ func _on_hit_box_hit():
 	self.chaos_meter += 5.0
 
 func _on_hurt_box_hit(dmg):
-	self.chaos_meter += 10.0
+	self.chaos_meter += 20.0
 
 func _on_health_zero_health():
 	died.emit()
