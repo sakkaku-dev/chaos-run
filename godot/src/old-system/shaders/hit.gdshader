@@ -9,16 +9,15 @@ void fragment() {
 	COLOR = texture(TEXTURE, UV);
 	if (enable) {
 		COLOR.rgb = vec3(1, 1, 1);
-	} else {
+	}
 	//	if (inverted) {
 	//		sample = 1.0 - sample;
 	//	}
-		if (COLOR.a > 0.0) {
-			float sample = texture(dissolve_texture, UV).r;
-			COLOR.a = step(sample, dissolve_amount);
-		}
+		//if (COLOR.a > 0.0) {
+			//float sample = texture(dissolve_texture, UV).r;
+			//COLOR.a = step(sample, dissolve_amount);
+		//}
 //		COLOR.rgb = texture(TEXTURE, UV);
-	}
 	
 
 }

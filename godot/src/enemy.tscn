@@ -1,0 +1,92 @@
+[gd_scene load_steps=12 format=3 uid="uid://i56s2i06l4i8"]
+
+[ext_resource type="Script" path="res://src/enemy.gd" id="1_m1poa"]
+[ext_resource type="Texture2D" uid="uid://dsywc47xdhg0q" path="res://assets/skeleton_v2.png" id="1_p2jjj"]
+[ext_resource type="Shader" path="res://src/old-system/shaders/hit.gdshader" id="2_gue4p"]
+[ext_resource type="Script" path="res://src/old-system/rpg/Hurtbox.gd" id="3_gedyw"]
+[ext_resource type="Script" path="res://src/old-system/rpg/health.gd" id="4_2pvf1"]
+[ext_resource type="Script" path="res://src/ShaderHitFlash.gd" id="6_bpdvi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qebrr"]
+shader = ExtResource("2_gue4p")
+shader_parameter/enable = false
+shader_parameter/dissolve_amount = 0.5
+
+[sub_resource type="Animation" id="Animation_k0uy1"]
+resource_name = "move"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_5t3cb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jjwmx"]
+_data = {
+"RESET": SubResource("Animation_5t3cb"),
+"move": SubResource("Animation_k0uy1")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qaufs"]
+size = Vector2(16, 16)
+
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_m1poa")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_qebrr")
+position = Vector2(0, -6)
+texture = ExtResource("1_p2jjj")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jjwmx")
+}
+
+[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health", "hit_flash")]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("3_gedyw")
+health = NodePath("Health")
+hit_flash = NodePath("HitFlash")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_qaufs")
+
+[node name="Health" type="Node" parent="Hurtbox"]
+script = ExtResource("4_2pvf1")
+max_health = 10
+
+[node name="HitFlash" type="Node" parent="Hurtbox" node_paths=PackedStringArray("node")]
+script = ExtResource("6_bpdvi")
+node = NodePath("../../Sprite2D")
+
+[connection signal="knockback" from="Hurtbox" to="." method="_on_hurtbox_knockback"]
+[connection signal="zero_health" from="Hurtbox/Health" to="." method="_on_health_zero_health"]

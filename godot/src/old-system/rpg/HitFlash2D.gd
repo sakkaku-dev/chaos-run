@@ -4,6 +4,10 @@ extends Node
 @export var time := 0.1
 @export var node: Node2D
 
+func _ready():
+	if node and node.material:
+		node.material = node.material.duplicate()
+
 func flash():
 	if node and node.material:
 		var mat = node.material as ShaderMaterial

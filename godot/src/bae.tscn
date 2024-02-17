@@ -1,0 +1,130 @@
+[gd_scene load_steps=12 format=3 uid="uid://rdrfy4i51cl8"]
+
+[ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
+[ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
+[ext_resource type="Script" path="res://src/bae.gd" id="1_uu8pv"]
+[ext_resource type="Script" path="res://src/old-system/rpg/HitBox.gd" id="2_e1oce"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eafcc"]
+size = Vector2(12, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_280xg"]
+size = Vector2(14, 4)
+
+[sub_resource type="Animation" id="Animation_yov1s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ddhmo"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_hnuck"]
+resource_name = "move"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_ib6fy"]
+resource_name = "roll"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y87iq"]
+_data = {
+"RESET": SubResource("Animation_yov1s"),
+"idle": SubResource("Animation_ddhmo"),
+"move": SubResource("Animation_hnuck"),
+"roll": SubResource("Animation_ib6fy")
+}
+
+[node name="Bae" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_uu8pv")
+
+[node name="HandRoot" type="Node2D" parent="."]
+position = Vector2(0, -7)
+
+[node name="HitBox" type="Area2D" parent="HandRoot"]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("2_e1oce")
+damage = 3
+knockback_force = 100
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandRoot/HitBox"]
+position = Vector2(18, 0)
+shape = SubResource("RectangleShape2D_eafcc")
+
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(0, -9)
+texture = ExtResource("1_pkb8e")
+hframes = 8
+
+[node name="PlayerInput" type="Node" parent="."]
+script = ExtResource("1_k4f7f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_280xg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_y87iq")
+}
