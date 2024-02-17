@@ -2,6 +2,8 @@ class_name HitBox
 extends Area2D
 
 signal hit()
+signal attack_start()
+signal attack_finish()
 
 @export var oneshot = true
 @export var damage := 1
@@ -26,9 +28,11 @@ func attack():
 		if rate_limiter.should_wait(): return
 		rate_limiter.run()
 	
+	attack_start.emit()
 	collision.disabled = false
 	await get_tree().create_timer(attack_time).timeout
 	collision.disabled = true
+	attack_finish.emit()
 
 func _do_damage(area: HurtBox):
 	var dmg = damage_value.get_value() if damage_value else damage

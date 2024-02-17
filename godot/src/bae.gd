@@ -27,6 +27,7 @@ signal chaos_meter_changed(value, max_value)
 		chaos_meter = clamp(v, 0, max_chaos_meter)
 		chaos_meter_changed.emit(v, max_chaos_meter)
 		chaos_meter_bar.value = v
+		chaos_meter_bar.max_value = max_chaos_meter
 		
 		special_skill_slot.modulate = Color(.5, .5, .5, .8) if chaos_meter < max_chaos_meter else Color.WHITE
 
@@ -34,9 +35,7 @@ var rolling := false
 
 func _ready():
 	self.chaos_meter = 0.0
-	gameover.hide()
-	chaos_meter_bar.max_value = max_chaos_meter
-	chaos_meter_bar.value = 0
+	animation_player.play("RESET")
 	
 	player_input.just_pressed.connect(func(ev: InputEvent):
 		if ev.is_action_pressed("attack"):
