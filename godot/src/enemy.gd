@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal died()
+
 @export var speed := 50
 @export var accel := 500
 
@@ -16,4 +18,5 @@ func _on_hurtbox_knockback(dir):
 
 
 func _on_health_zero_health():
+	died.emit()
 	queue_free()
