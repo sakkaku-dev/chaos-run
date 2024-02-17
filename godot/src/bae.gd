@@ -8,8 +8,10 @@ signal chaos_meter_changed(value, max_value)
 @export var roll_speed := 300
 
 @export var max_chaos_meter := 100
-@export var chaos_meter_bar: ProgressBar
+
 @export var gameover: Control
+@export var chaos_meter_bar: ProgressBar
+@export var special_skill_slot: Control
 
 @onready var roll_rate_limiter = $RollRateLimiter
 
@@ -25,6 +27,8 @@ signal chaos_meter_changed(value, max_value)
 		chaos_meter = clamp(v, 0, max_chaos_meter)
 		chaos_meter_changed.emit(v, max_chaos_meter)
 		chaos_meter_bar.value = v
+		
+		special_skill_slot.modulate = Color(.5, .5, .5, .8) if chaos_meter < max_chaos_meter else Color.WHITE
 
 var rolling := false
 

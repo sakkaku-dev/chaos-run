@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=32 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -165,11 +165,17 @@ _data = {
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ctury"]
-bg_color = Color(0.239216, 0.105882, 0.105882, 1)
+bg_color = Color(0.105882, 0.105882, 0.239216, 1)
 border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3y46c"]
-bg_color = Color(0.729412, 0.270588, 0.254902, 1)
+bg_color = Color(0.439216, 0.254902, 0.729412, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12nwv"]
+bg_color = Color(0.321569, 0.129412, 0.129412, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qbgh"]
+bg_color = Color(0.788235, 0.117647, 0.117647, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a3145"]
 shader = ExtResource("7_85w35")
@@ -182,10 +188,11 @@ shader_parameter/fill_ratio = 1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vmewj"]
 size = Vector2(16, 20)
 
-[node name="Bae" type="CharacterBody2D" node_paths=PackedStringArray("chaos_meter_bar", "gameover") groups=["player"]]
+[node name="Bae" type="CharacterBody2D" node_paths=PackedStringArray("gameover", "chaos_meter_bar", "special_skill_slot") groups=["player"]]
 script = ExtResource("1_uu8pv")
-chaos_meter_bar = NodePath("CanvasLayer/Control2/ProgressBar")
 gameover = NodePath("CanvasLayer/Gameover")
+chaos_meter_bar = NodePath("CanvasLayer/Control2/ProgressBar")
+special_skill_slot = NodePath("CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer/Special")
 
 [node name="RollRateLimiter" type="Timer" parent="."]
 script = ExtResource("3_hvheh")
@@ -268,7 +275,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_3y46c")
 value = 50.0
 show_percentage = false
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -279,22 +286,32 @@ offset_left = -63.0
 offset_top = -25.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="HpBar" type="ProgressBar" parent="CanvasLayer/Control2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_12nwv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3qbgh")
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/VBoxContainer"]
+layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer"]
+[node name="Attack" type="TextureRect" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("7_fdl4x")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer/TextureRect" node_paths=PackedStringArray("timer")]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer/Attack" node_paths=PackedStringArray("timer")]
 material = SubResource("ShaderMaterial_a3145")
 layout_mode = 1
 anchors_preset = 15
@@ -303,16 +320,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_c31dr")
-timer = NodePath("../../../../../../HandRoot/HitBox/RateLimiter")
+timer = NodePath("../../../../../../../HandRoot/HitBox/RateLimiter")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer/TextureRect"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer/Attack"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer/TextureRect/MarginContainer"]
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer/Attack/MarginContainer"]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_e4cu6")
 offset = Vector2(-3, 3)
@@ -320,14 +337,14 @@ hframes = 34
 vframes = 24
 frame = 77
 
-[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer"]
+[node name="Roll" type="TextureRect" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("7_fdl4x")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer/TextureRect2" node_paths=PackedStringArray("timer")]
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer/Roll" node_paths=PackedStringArray("timer")]
 material = SubResource("ShaderMaterial_a3145")
 layout_mode = 1
 anchors_preset = 15
@@ -336,16 +353,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_c31dr")
-timer = NodePath("../../../../../../RollRateLimiter")
+timer = NodePath("../../../../../../../RollRateLimiter")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer/TextureRect2"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer/Roll"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer/TextureRect2/MarginContainer"]
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer/Roll/MarginContainer"]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_e4cu6")
 offset = Vector2(-3, 3)
@@ -353,14 +370,14 @@ hframes = 34
 vframes = 24
 frame = 78
 
-[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer"]
+[node name="Special" type="TextureRect" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("7_fdl4x")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer/TextureRect3" node_paths=PackedStringArray("timer")]
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer/Special" node_paths=PackedStringArray("timer")]
 material = SubResource("ShaderMaterial_a3145")
 layout_mode = 1
 anchors_preset = 15
@@ -369,16 +386,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_c31dr")
-timer = NodePath("../../../../../../SpecialHitBox/RateLimiter2")
+timer = NodePath("../../../../../../../SpecialHitBox/RateLimiter2")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer/TextureRect3"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer/Special"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/MarginContainer/HBoxContainer/TextureRect3/MarginContainer"]
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/VBoxContainer/MarginContainer/HBoxContainer/Special/MarginContainer"]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_e4cu6")
 offset = Vector2(-3, 3)
@@ -433,9 +450,10 @@ position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_vmewj")
 disabled = true
 
-[node name="Health" type="Node" parent="HurtBox"]
+[node name="Health" type="Node" parent="HurtBox" node_paths=PackedStringArray("hp_bar")]
 script = ExtResource("7_0gixn")
-max_health = 10
+max_health = 15
+hp_bar = NodePath("../../CanvasLayer/Control2/VBoxContainer/HpBar")
 
 [node name="FrameFreeze" type="Node" parent="HurtBox"]
 script = ExtResource("8_s1lnb")
