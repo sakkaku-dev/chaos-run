@@ -3,43 +3,46 @@ extends CharacterBody2D
 @export var accel := 800
 @export var speed := 100
 @export var roll_speed := 300
-@export var attack_rate := 0.5
-@export var rolling_cooldown := 1.0
+
+@export var chaos_meter_bar: ProgressBar
+
+@onready var roll_rate_limiter = $RollRateLimiter
 
 @onready var player_input = $PlayerInput
 @onready var animation_player = $AnimationPlayer
 @onready var body = $Body
 @onready var hand_root = $HandRoot
-@onready var collision_shape_2d = $HandRoot/HitBox/CollisionShape2D
+@onready var normal_hitbox = $HandRoot/HitBox
+@onready var special_hitbox = $SpecialHitBox
 
-var can_attack = true
+@onready var chaos_meter := 0.0:
+	set(v):
+		chaos_meter = clamp(v, 0, chaos_meter_bar.max_value)
+		chaos_meter_bar.value = v
 
-var can_roll = true
-var rolling = false
+var rolling := false
 
 func _ready():
-	collision_shape_2d.disabled = true
+	self.chaos_meter = 0.0
 	
 	player_input.just_pressed.connect(func(ev: InputEvent):
-		if ev.is_action_pressed("attack") and can_attack:
-			can_attack = false
-			get_tree().create_timer(attack_rate).timeout.connect(func(): can_attack = true)
-			
-			collision_shape_2d.disabled = false
-			await get_tree().create_timer(0.1).timeout
-			collision_shape_2d.disabled = true
+		if ev.is_action_pressed("attack"):
+			normal_hitbox.attack()
 		
-		if ev.is_action_pressed("roll") and not rolling and can_roll:
+		if ev.is_action_pressed("roll") and not roll_rate_limiter.should_wait():
 			var motion = _get_motion()
 			if motion:
 				velocity += motion * roll_speed
-				can_roll = false
-				get_tree().create_timer(rolling_cooldown).timeout.connect(func(): can_roll = true)
+				roll_rate_limiter.run()
 				
 				rolling = true
 				animation_player.play("roll")
 				await animation_player.animation_finished
 				rolling = false
+				
+		if ev.is_action_pressed("special_attack") and chaos_meter >= chaos_meter_bar.max_value:
+			self.chaos_meter = 0
+			special_hitbox.attack()
 	)
 
 func _get_motion():
@@ -60,3 +63,7 @@ func _physics_process(delta):
 	
 	velocity = velocity.move_toward(motion * speed, accel * delta)
 	move_and_slide()
+
+
+func _on_hit_box_hit():
+	self.chaos_meter += 10.0
