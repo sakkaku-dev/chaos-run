@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://i56s2i06l4i8"]
+[gd_scene load_steps=16 format=3 uid="uid://i56s2i06l4i8"]
 
 [ext_resource type="Script" path="res://src/enemy.gd" id="1_m1poa"]
 [ext_resource type="Texture2D" uid="uid://dsywc47xdhg0q" path="res://assets/skeleton_v2.png" id="1_p2jjj"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://src/old-system/rpg/health.gd" id="4_2pvf1"]
 [ext_resource type="Script" path="res://src/ShaderHitFlash.gd" id="6_bpdvi"]
 [ext_resource type="Script" path="res://src/old-system/rpg/HitBox.gd" id="7_qlb3i"]
+[ext_resource type="Script" path="res://src/SoftCollision.gd" id="8_0e65w"]
 
 [sub_resource type="Animation" id="Animation_5t3cb"]
 length = 0.001
@@ -57,6 +58,9 @@ shader_parameter/hit_color = Color(1, 0, 0, 1)
 [sub_resource type="CircleShape2D" id="CircleShape2D_bsobc"]
 radius = 8.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_0y67c"]
+radius = 11.0
+
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_m1poa")
 
@@ -103,6 +107,15 @@ knockback_force = 100
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_bsobc")
+
+[node name="SoftCollision" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 32
+script = ExtResource("8_0e65w")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="SoftCollision"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_0y67c")
 
 [connection signal="knockback" from="Hurtbox" to="." method="_on_hurtbox_knockback"]
 [connection signal="zero_health" from="Hurtbox/Health" to="." method="_on_health_zero_health"]
