@@ -3,6 +3,7 @@ extends Area2D
 
 signal hit()
 
+@export var oneshot = true
 @export var damage := 1
 @export var damage_value: NumberValue
 @export var knockback_force := 0
@@ -12,7 +13,7 @@ signal hit()
 @onready var collision := $CollisionShape2D
 
 func _ready():
-	if collision:
+	if collision and oneshot:
 		collision.disabled = true
 	
 	area_entered.connect(func(area):

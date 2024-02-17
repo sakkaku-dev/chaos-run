@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var roll_speed := 300
 
 @export var chaos_meter_bar: ProgressBar
+@export var game_over: Control
 
 @onready var roll_rate_limiter = $RollRateLimiter
 
@@ -24,6 +25,7 @@ var rolling := false
 
 func _ready():
 	self.chaos_meter = 0.0
+	game_over.hide()
 	
 	player_input.just_pressed.connect(func(ev: InputEvent):
 		if ev.is_action_pressed("attack"):
@@ -67,3 +69,7 @@ func _physics_process(delta):
 
 func _on_hit_box_hit():
 	self.chaos_meter += 10.0
+
+
+func _on_health_zero_health():
+	game_over.show()
