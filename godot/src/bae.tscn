@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=42 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -22,6 +22,10 @@
 [ext_resource type="Script" path="res://src/CircleTimer.gd" id="9_c31dr"]
 [ext_resource type="Texture2D" uid="uid://b7fsp77cpvup8" path="res://assets/Cursor.png" id="9_owcvy"]
 [ext_resource type="Script" path="res://src/Gameover.gd" id="12_fcj8v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r28m1"]
+shader = ExtResource("4_lfcma")
+shader_parameter/radius = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xkbdw"]
 radius = 98.5089
@@ -263,10 +267,26 @@ script = ExtResource("3_hvheh")
 
 [node name="Skills" type="Node" parent="."]
 
-[node name="AmeTeleport" type="Node" parent="Skills"]
+[node name="AmeTeleport" type="Node" parent="Skills" node_paths=PackedStringArray("rect")]
 script = ExtResource("2_dyrvv")
+rect = NodePath("ColorRect")
 icon = ExtResource("7_fdl4x")
 cooldown = 2.0
+
+[node name="ColorRect" type="ColorRect" parent="Skills/AmeTeleport"]
+material = SubResource("ShaderMaterial_r28m1")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.380392, 0.588235, 1, 0.403922)
 
 [node name="KiaraAttack" type="Node" parent="Skills"]
 script = ExtResource("5_rn1b7")
