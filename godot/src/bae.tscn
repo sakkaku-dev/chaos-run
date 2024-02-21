@@ -1,8 +1,9 @@
-[gd_scene load_steps=37 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=39 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
 [ext_resource type="Script" path="res://src/bae.gd" id="1_uu8pv"]
+[ext_resource type="Script" path="res://src/skills/AmeTeleport.gd" id="2_dyrvv"]
 [ext_resource type="Script" path="res://src/old-system/rpg/HitBox.gd" id="2_e1oce"]
 [ext_resource type="Script" path="res://src/old-system/rpg/rate_limiter.gd" id="3_hvheh"]
 [ext_resource type="Script" path="res://src/old-system/rpg/Hurtbox.gd" id="4_ath4u"]
@@ -236,9 +237,14 @@ tracks/0/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_8qaag"]
+resource_name = "ame_teleport"
+length = 0.2
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y87iq"]
 _data = {
 "RESET": SubResource("Animation_yov1s"),
+"ame_teleport": SubResource("Animation_8qaag"),
 "attack": SubResource("Animation_sq686"),
 "idle": SubResource("Animation_ddhmo"),
 "move": SubResource("Animation_hnuck"),
@@ -264,14 +270,27 @@ shader_parameter/fill_ratio = 1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vmewj"]
 size = Vector2(16, 20)
 
-[node name="Bae" type="CharacterBody2D" node_paths=PackedStringArray("gameover", "chaos_meter_bar", "special_skill_slot") groups=["player"]]
+[node name="Bae" type="CharacterBody2D" node_paths=PackedStringArray("gameover", "chaos_meter_bar", "special_skill_slot", "attack_skill_slot", "defense_skill_slot") groups=["player"]]
 script = ExtResource("1_uu8pv")
 gameover = NodePath("CanvasLayer/Gameover")
 chaos_meter_bar = NodePath("CanvasLayer/Control2/ProgressBar")
 special_skill_slot = NodePath("CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Special")
+attack_skill_slot = NodePath("CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Attack")
+defense_skill_slot = NodePath("CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Defense")
 
-[node name="RollRateLimiter" type="Timer" parent="."]
+[node name="DefenseTimer" type="Timer" parent="."]
 script = ExtResource("3_hvheh")
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.5
+script = ExtResource("3_hvheh")
+
+[node name="Skills" type="Node" parent="."]
+
+[node name="AmeTeleport" type="Node" parent="Skills"]
+script = ExtResource("2_dyrvv")
+icon = ExtResource("7_fdl4x")
+cooldown = 2.0
 
 [node name="SpecialHitBox" type="Area2D" parent="." node_paths=PackedStringArray("rate_limiter")]
 position = Vector2(0, -7)
@@ -315,7 +334,7 @@ collision_mask = 16
 script = ExtResource("2_e1oce")
 damage = 3
 knockback_force = 100
-rate_limiter = NodePath("RateLimiter")
+rate_limiter = NodePath("../../AttackTimer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HandRoot/HitBox"]
 position = Vector2(18, 0)
@@ -328,10 +347,6 @@ offset_right = 6.0
 offset_bottom = 8.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0.203922)
-
-[node name="RateLimiter" type="Timer" parent="HandRoot/HitBox"]
-wait_time = 0.5
-script = ExtResource("3_hvheh")
 
 [node name="HpBar" type="ProgressBar" parent="." node_paths=PackedStringArray("health")]
 custom_minimum_size = Vector2(15, 2)
@@ -427,7 +442,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_c31dr")
-timer = NodePath("../../../../../../../HandRoot/HitBox/RateLimiter")
+timer = NodePath("../../../../../../../AttackTimer")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Attack"]
 layout_mode = 1
@@ -444,14 +459,14 @@ hframes = 34
 vframes = 24
 frame = 77
 
-[node name="Roll" type="TextureRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Defense" type="TextureRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("7_fdl4x")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Roll" node_paths=PackedStringArray("timer")]
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Defense" node_paths=PackedStringArray("timer")]
 material = SubResource("ShaderMaterial_a3145")
 layout_mode = 1
 anchors_preset = 15
@@ -460,16 +475,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_c31dr")
-timer = NodePath("../../../../../../../RollRateLimiter")
+timer = NodePath("../../../../../../../DefenseTimer")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Roll"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Defense"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Roll/MarginContainer"]
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Defense/MarginContainer"]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_e4cu6")
 offset = Vector2(-3, 3)
