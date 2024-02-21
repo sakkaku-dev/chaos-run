@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=41 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -9,15 +9,18 @@
 [ext_resource type="Script" path="res://src/old-system/rpg/Hurtbox.gd" id="4_ath4u"]
 [ext_resource type="Shader" path="res://src/simple_circle.gdshader" id="4_lfcma"]
 [ext_resource type="Shader" path="res://src/old-system/shaders/hit.gdshader" id="4_p3cl5"]
+[ext_resource type="Script" path="res://src/skills/KiaraAttack.gd" id="5_rn1b7"]
 [ext_resource type="Script" path="res://src/old-system/rpg/health.gd" id="7_0gixn"]
 [ext_resource type="Theme" uid="uid://b7kuxx763de25" path="res://theme/theme.tres" id="7_01g6y"]
 [ext_resource type="Shader" path="res://src/circle.gdshader" id="7_85w35"]
 [ext_resource type="Script" path="res://src/HpBar.gd" id="7_abq4l"]
 [ext_resource type="Texture2D" uid="uid://bwve2nq30wldn" path="res://icon.svg" id="7_fdl4x"]
+[ext_resource type="PackedScene" uid="uid://cqimjkhl2w5rr" path="res://src/skills/kiara_attack.tscn" id="8_7wopi"]
 [ext_resource type="Texture2D" uid="uid://cr5lgys0l5syn" path="res://assets/tilemap_packed.png" id="8_e4cu6"]
 [ext_resource type="Script" path="res://src/old-system/FrameFreeze.gd" id="8_s1lnb"]
 [ext_resource type="Script" path="res://src/ShaderHitFlash.gd" id="9_bqdnm"]
 [ext_resource type="Script" path="res://src/CircleTimer.gd" id="9_c31dr"]
+[ext_resource type="Texture2D" uid="uid://b7fsp77cpvup8" path="res://assets/Cursor.png" id="9_owcvy"]
 [ext_resource type="Script" path="res://src/Gameover.gd" id="12_fcj8v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xkbdw"]
@@ -27,8 +30,8 @@ radius = 98.5089
 shader = ExtResource("4_lfcma")
 shader_parameter/radius = 1.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eafcc"]
-size = Vector2(12, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vmewj"]
+size = Vector2(14, 18)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12nwv"]
 bg_color = Color(0.541176, 0.117647, 0.117647, 1)
@@ -85,34 +88,22 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("HandRoot/HitBox/CollisionShape2D/ColorRect:color")
+tracks/3/path = NodePath("SpecialHitBox/ColorRect:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0.203922)]
+"update": 1,
+"values": [false]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("SpecialHitBox/ColorRect:visible")
+tracks/4/path = NodePath("CanvasLayer/Gameover:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("CanvasLayer/Gameover:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -122,18 +113,6 @@ tracks/5/keys = {
 [sub_resource type="Animation" id="Animation_sq686"]
 resource_name = "attack"
 length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HandRoot/HitBox/CollisionShape2D/ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0.619608), Color(1, 1, 1, 0.243137)]
-}
 
 [sub_resource type="Animation" id="Animation_ddhmo"]
 resource_name = "idle"
@@ -267,9 +246,6 @@ shader_parameter/turn = 0.0
 shader_parameter/blur = 0.0
 shader_parameter/fill_ratio = 1.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vmewj"]
-size = Vector2(16, 20)
-
 [node name="Bae" type="CharacterBody2D" node_paths=PackedStringArray("gameover", "chaos_meter_bar", "special_skill_slot", "attack_skill_slot", "defense_skill_slot") groups=["player"]]
 script = ExtResource("1_uu8pv")
 gameover = NodePath("CanvasLayer/Gameover")
@@ -292,14 +268,19 @@ script = ExtResource("2_dyrvv")
 icon = ExtResource("7_fdl4x")
 cooldown = 2.0
 
-[node name="SpecialHitBox" type="Area2D" parent="." node_paths=PackedStringArray("rate_limiter")]
+[node name="KiaraAttack" type="Node" parent="Skills"]
+script = ExtResource("5_rn1b7")
+attack_scene = ExtResource("8_7wopi")
+icon = ExtResource("7_fdl4x")
+cooldown = 0.2
+
+[node name="SpecialHitBox" type="Area2D" parent="."]
 position = Vector2(0, -7)
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("2_e1oce")
 damage = 6
 knockback_force = 300
-rate_limiter = NodePath("RateLimiter2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpecialHitBox"]
 shape = SubResource("CircleShape2D_xkbdw")
@@ -325,28 +306,38 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0.133333)
 
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "frame_freeze", "hit_flash", "collision")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_ath4u")
+health = NodePath("Health")
+frame_freeze = NodePath("FrameFreeze")
+hit_flash = NodePath("ShaderHitFlash")
+invincible_time = 0.5
+collision = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_vmewj")
+disabled = true
+
+[node name="Health" type="Node" parent="HurtBox"]
+script = ExtResource("7_0gixn")
+max_health = 15
+
+[node name="FrameFreeze" type="Node" parent="HurtBox"]
+script = ExtResource("8_s1lnb")
+
+[node name="ShaderHitFlash" type="Node" parent="HurtBox" node_paths=PackedStringArray("node")]
+script = ExtResource("9_bqdnm")
+node = NodePath("../../Body")
+
 [node name="HandRoot" type="Node2D" parent="."]
 position = Vector2(0, -7)
 
-[node name="HitBox" type="Area2D" parent="HandRoot" node_paths=PackedStringArray("rate_limiter")]
-collision_layer = 0
-collision_mask = 16
-script = ExtResource("2_e1oce")
-damage = 3
-knockback_force = 100
-rate_limiter = NodePath("../../AttackTimer")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HandRoot/HitBox"]
-position = Vector2(18, 0)
-shape = SubResource("RectangleShape2D_eafcc")
-
-[node name="ColorRect" type="ColorRect" parent="HandRoot/HitBox/CollisionShape2D"]
-offset_left = -6.0
-offset_top = -8.0
-offset_right = 6.0
-offset_bottom = 8.0
-mouse_filter = 2
-color = Color(1, 1, 1, 0.203922)
+[node name="Sprite2D" type="Sprite2D" parent="HandRoot"]
+position = Vector2(16, 0)
+texture = ExtResource("9_owcvy")
 
 [node name="HpBar" type="ProgressBar" parent="." node_paths=PackedStringArray("health")]
 custom_minimum_size = Vector2(15, 2)
@@ -558,32 +549,6 @@ horizontal_alignment = 1
 [node name="Restart" type="Button" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Try again"
-
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "frame_freeze", "hit_flash", "collision")]
-collision_layer = 8
-collision_mask = 0
-script = ExtResource("4_ath4u")
-health = NodePath("Health")
-frame_freeze = NodePath("FrameFreeze")
-hit_flash = NodePath("ShaderHitFlash")
-invincible_time = 0.5
-collision = NodePath("CollisionShape2D")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, -8)
-shape = SubResource("RectangleShape2D_vmewj")
-disabled = true
-
-[node name="Health" type="Node" parent="HurtBox"]
-script = ExtResource("7_0gixn")
-max_health = 15
-
-[node name="FrameFreeze" type="Node" parent="HurtBox"]
-script = ExtResource("8_s1lnb")
-
-[node name="ShaderHitFlash" type="Node" parent="HurtBox" node_paths=PackedStringArray("node")]
-script = ExtResource("9_bqdnm")
-node = NodePath("../../Body")
 
 [connection signal="attack_finish" from="SpecialHitBox" to="SpecialHitBox/ColorRect" method="hide"]
 [connection signal="attack_start" from="SpecialHitBox" to="SpecialHitBox/ColorRect" method="show"]

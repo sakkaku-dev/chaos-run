@@ -24,7 +24,6 @@ signal chaos_meter_changed(value, max_value)
 @onready var animation_player = $AnimationPlayer
 @onready var body = $Body
 @onready var hand_root = $HandRoot
-@onready var normal_hitbox = $HandRoot/HitBox
 @onready var special_hitbox = $SpecialHitBox
 
 @onready var chaos_meter := 0.0:
@@ -37,24 +36,31 @@ signal chaos_meter_changed(value, max_value)
 		special_skill_slot.modulate = Color(.5, .5, .5, .8) if chaos_meter < max_chaos_meter else Color.WHITE
 
 @onready var skill_map := {
-	Skill.Type.AME_TELEPORT: $Skills/AmeTeleport
+	Skill.Type.AME_TELEPORT: $Skills/AmeTeleport,
+	Skill.Type.KIARA_SWORD_SHIELD: $Skills/KiaraAttack,
 }
 
-var attack_skill: Skill.Type = Skill.Type.AME_TELEPORT
+var attack_skill: Skill.Type = Skill.Type.KIARA_SWORD_SHIELD
 var defense_skill: Skill.Type = Skill.Type.AME_TELEPORT
 
 func _ready():
 	animation_player.play("RESET")
 	_update_for_current_skills()
 	
-	player_input.just_pressed.connect(func(ev: InputEvent):
-		if ev.is_action_pressed("attack") and not attack_timer.should_wait():
-			attack_timer.run()
-			skill_map[attack_skill].execute(self)
+	player_input.on_event.connect(func(ev: InputEvent):
+		if not attack_timer.should_wait():
+			if ev.is_action_pressed("attack"):
+				skill_map[attack_skill].pressed(self)
+			elif ev.is_action_released("attack"):
+				attack_timer.run()
+				skill_map[attack_skill].released(self)
 		
-		if ev.is_action_pressed("roll") and not defense_timer.should_wait():
-			defense_timer.run()
-			skill_map[defense_skill].execute(self)
+		if not defense_timer.should_wait():
+			if ev.is_action_pressed("roll"):
+				skill_map[defense_skill].pressed(self)
+			elif ev.is_action_released("roll"):
+				defense_timer.run()
+				skill_map[defense_skill].released(self)
 				
 		if ev.is_action_pressed("special_attack") and chaos_meter >= max_chaos_meter:
 			special_hitbox.attack()
@@ -68,6 +74,9 @@ func _update_for_current_skills():
 	var defense = skill_map[defense_skill]
 	defense_timer.wait_time = defense.cooldown
 	defense_skill_slot.texture = defense.icon
+
+func add_to_hand(node: Node2D):
+	hand_root.add_child(node)
 
 func get_motion():
 	var motion = Vector2(

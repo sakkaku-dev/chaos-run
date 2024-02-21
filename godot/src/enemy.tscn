@@ -56,7 +56,7 @@ shader_parameter/enable = false
 shader_parameter/hit_color = Color(1, 0, 0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bsobc"]
-radius = 8.0
+radius = 7.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0y67c"]
 radius = 11.0
@@ -100,7 +100,6 @@ hframes = 4
 collision_layer = 0
 collision_mask = 8
 script = ExtResource("7_qlb3i")
-oneshot = false
 damage = 2
 knockback_force = 100
 

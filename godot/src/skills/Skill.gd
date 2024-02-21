@@ -10,3 +10,9 @@ enum Type {
 
 @export var icon: Texture2D
 @export var cooldown := 1.0
+
+func pressed(player: Player):
+	pass
+	
+func released(player: Player):
+	pass
