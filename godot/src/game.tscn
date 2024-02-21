@@ -12,7 +12,7 @@
 [sub_resource type="TileMapPattern" id="TileMapPattern_mc65i"]
 tile_data = PackedInt32Array(0, 1, 0, 1, 65537, 0, 2, 131073, 0, 3, 196609, 0)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o135u"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7p5h0"]
 texture = ExtResource("1_ehh2i")
 1:0/0 = 0
 2:0/0 = 0
@@ -655,7 +655,7 @@ texture = ExtResource("1_y4cty")
 
 [sub_resource type="TileSet" id="TileSet_3j8b7"]
 sources/1 = SubResource("TileSetAtlasSource_7pusc")
-sources/0 = SubResource("TileSetAtlasSource_o135u")
+sources/0 = SubResource("TileSetAtlasSource_7p5h0")
 pattern_0 = SubResource("TileMapPattern_mc65i")
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("player", "enemy_count_label", "enemy_killed_label")]

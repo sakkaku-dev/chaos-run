@@ -4,6 +4,8 @@ extends Node2D
 @export var enemy_scene: PackedScene
 @export var distance_to_player := 200
 
+@export var max_enemies_for_chaos := 30.0
+
 @export var enemy_count_label: Label
 @export var enemy_killed_label: Label
 
@@ -20,6 +22,9 @@ func _ready():
 func _update_labels():
 	enemy_count_label.text = "Enemies: %s" % enemy_count
 	enemy_killed_label.text = "Killed: %s" % enemy_killed
+
+func _process(_d):
+	player.chaos_meter = (float(enemy_count) / max_enemies_for_chaos) * 100
 
 func _spawn_enemy():
 	var enemy = enemy_scene.instantiate()

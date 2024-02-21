@@ -34,7 +34,6 @@ signal chaos_meter_changed(value, max_value)
 var rolling := false
 
 func _ready():
-	self.chaos_meter = 0.0
 	animation_player.play("RESET")
 	
 	player_input.just_pressed.connect(func(ev: InputEvent):
@@ -53,7 +52,6 @@ func _ready():
 				rolling = false
 				
 		if ev.is_action_pressed("special_attack") and chaos_meter >= max_chaos_meter:
-			self.chaos_meter = 0
 			special_hitbox.attack()
 	)
 
@@ -75,13 +73,6 @@ func _physics_process(delta):
 	
 	velocity = velocity.move_toward(motion * speed, accel * delta)
 	move_and_slide()
-
-
-func _on_hit_box_hit():
-	self.chaos_meter += 5.0
-
-func _on_hurt_box_hit(dmg):
-	self.chaos_meter += 20.0
 
 func _on_health_zero_health():
 	died.emit()
