@@ -15,7 +15,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1pd06"]
-size = Vector2(10, 20)
+size = Vector2(15, 30)
 
 [resource]
 script = ExtResource("1_n5btq")

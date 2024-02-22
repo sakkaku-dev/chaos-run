@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=47 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -27,38 +27,12 @@
 [ext_resource type="Texture2D" uid="uid://c536nm63xcefg" path="res://assets/Icon_Calli.png" id="10_6i8od"]
 [ext_resource type="Script" path="res://src/skills/GuraDive.gd" id="10_vg1ia"]
 [ext_resource type="Texture2D" uid="uid://wefkuh407ntl" path="res://assets/Icon_Gura.png" id="11_h7gbh"]
-[ext_resource type="Script" path="res://src/skills/InaTentacles.gd" id="11_u5c5h"]
-[ext_resource type="Texture2D" uid="uid://dtlecoep3f6pa" path="res://assets/Tentacles.png" id="12_5eu7p"]
 [ext_resource type="Script" path="res://src/Gameover.gd" id="12_fcj8v"]
-[ext_resource type="Script" path="res://src/skills/HitBoxAttackResource.gd" id="12_o4enn"]
-[ext_resource type="Texture2D" uid="uid://bkivylqrr6n53" path="res://assets/Icon_Ina.png" id="14_be5ax"]
+[ext_resource type="PackedScene" uid="uid://c77wbnvg056ri" path="res://src/skills/gura_dive.tscn" id="13_e854t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r28m1"]
 shader = ExtResource("4_lfcma")
 shader_parameter/radius = 1.0
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_25j1i"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("12_5eu7p")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_i1khp"]
-radius = 80.0
-
-[sub_resource type="Resource" id="Resource_2mbve"]
-script = ExtResource("12_o4enn")
-damage = 1
-attack_time = 1.0
-knockback = 300
-attack_shape = SubResource("CircleShape2D_i1khp")
-offset = Vector2(0, 0)
-animation = SubResource("SpriteFrames_25j1i")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vmewj"]
 size = Vector2(14, 18)
@@ -305,14 +279,12 @@ icon = ExtResource("10_6i8od")
 
 [node name="GuraDive" type="Node" parent="Skills"]
 script = ExtResource("10_vg1ia")
+attack_scene = ExtResource("13_e854t")
 icon = ExtResource("11_h7gbh")
 cooldown = 2.0
 
 [node name="InaTentacles" type="Node" parent="Skills"]
-script = ExtResource("11_u5c5h")
-attack_scene = ExtResource("8_7wopi")
-hitbox_resource = SubResource("Resource_2mbve")
-icon = ExtResource("14_be5ax")
+script = ExtResource("6_5my0o")
 cooldown = 3.0
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "frame_freeze", "hit_flash", "collision")]

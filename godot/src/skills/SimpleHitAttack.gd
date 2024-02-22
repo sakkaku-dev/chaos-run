@@ -2,8 +2,12 @@ extends Skill
 
 @export var attack_scene: PackedScene
 @export var hitbox_resource: HitBoxAttackResource
+@export var to_hand := true
 
 func released(p: Player):
 	var attack = attack_scene.instantiate()
-	p.add_to_hand(attack)
+	if to_hand:
+		p.add_to_hand(attack)
+	else:
+		p.add_child(attack)
 	attack.apply(hitbox_resource)

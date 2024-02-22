@@ -25,6 +25,8 @@ signal chaos_meter_changed(value, max_value)
 @onready var body = $Body
 @onready var hand_root = $HandRoot
 
+@onready var collision_shape_2d = $HurtBox/CollisionShape2D
+
 @onready var chaos_meter := 0.0:
 	set(v):
 		chaos_meter = clamp(v, 0, max_chaos_meter)
@@ -42,8 +44,10 @@ signal chaos_meter_changed(value, max_value)
 	Skill.Type.INA_TENTACLES: $Skills/InaTentacles,
 }
 
-var attack_skill: Skill.Type = Skill.Type.CALLI_SCYTHE
-var defense_skill: Skill.Type = Skill.Type.INA_TENTACLES
+var attack_skill: Skill.Type = Skill.Type.KIARA_SWORD_SHIELD
+var defense_skill: Skill.Type = Skill.Type.GURA_SHARK_DIVE
+
+var follow_node
 
 func _ready():
 	animation_player.play("RESET")
@@ -89,17 +93,27 @@ func get_motion():
 	return motion.normalized()
 
 func _physics_process(delta):
-	var motion = get_motion()
-	var aim_dir = global_position.direction_to(get_global_mouse_position())
-	body.scale.x = -1 if aim_dir.x < 0 else 1
-	hand_root.global_rotation = Vector2.RIGHT.angle_to(aim_dir)
-	
-	animation_player.play("idle" if motion.length() == 0 else "move")
-	
-	velocity = velocity.move_toward(motion * speed, accel * delta)
-	move_and_slide()
+	if follow_node:
+		global_position = follow_node.global_position
+	else:
+		var motion = get_motion()
+		var aim_dir = global_position.direction_to(get_global_mouse_position())
+		body.scale.x = -1 if aim_dir.x < 0 else 1
+		hand_root.global_rotation = Vector2.RIGHT.angle_to(aim_dir)
+		
+		animation_player.play("idle" if motion.length() == 0 else "move")
+		
+		velocity = velocity.move_toward(motion * speed, accel * delta)
+		move_and_slide()
 
 func _on_health_zero_health():
 	died.emit()
 	gameover.show()
 
+func follow(node: Node2D):
+	follow_node = node
+	collision_shape_2d.disabled = true
+
+func unfollow():
+	follow_node = null
+	collision_shape_2d.disabled = false
