@@ -6,6 +6,8 @@ func _ready():
 	material = material.duplicate()
 	
 func _process(delta):
+	if not timer: return
+	
 	if timer.is_stopped():
 		hide()
 		return

@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://h55jwmn74pny"]
+
+[ext_resource type="Script" path="res://src/old-system/rpg/HitBox.gd" id="1_akcjk"]
+[ext_resource type="Shader" path="res://src/simple_circle.gdshader" id="2_8j6ot"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xkbdw"]
+radius = 98.5089
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fthlt"]
+shader = ExtResource("2_8j6ot")
+shader_parameter/radius = 1.0
+
+[node name="PushHitBox" type="Area2D"]
+position = Vector2(0, -7)
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_akcjk")
+damage = 6
+knockback_force = 300
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xkbdw")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_fthlt")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -99.0
+offset_top = -99.0
+offset_right = 99.0
+offset_bottom = 99.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.133333)
+
+[connection signal="attack_finish" from="." to="ColorRect" method="hide"]
+[connection signal="attack_start" from="." to="ColorRect" method="show"]

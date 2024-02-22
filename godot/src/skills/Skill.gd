@@ -6,6 +6,7 @@ enum Type {
 	GURA_SHARK_DIVE,
 	KIARA_SWORD_SHIELD,
 	CALLI_SCYTHE,
+	INA_TENTACLES,
 }
 
 @export var icon: Texture2D

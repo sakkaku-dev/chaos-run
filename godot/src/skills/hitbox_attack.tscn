@@ -12,13 +12,6 @@ script = ExtResource("1_u5rew")
 knockback_force = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(15, 0)
 shape = SubResource("RectangleShape2D_eafcc")
 
-[node name="ColorRect" type="ColorRect" parent="CollisionShape2D"]
-offset_left = -5.0
-offset_top = -10.0
-offset_right = 5.0
-offset_bottom = 10.0
-mouse_filter = 2
-color = Color(1, 1, 1, 0.203922)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]

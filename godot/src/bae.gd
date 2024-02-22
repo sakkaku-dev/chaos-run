@@ -24,7 +24,6 @@ signal chaos_meter_changed(value, max_value)
 @onready var animation_player = $AnimationPlayer
 @onready var body = $Body
 @onready var hand_root = $HandRoot
-@onready var special_hitbox = $SpecialHitBox
 
 @onready var chaos_meter := 0.0:
 	set(v):
@@ -38,11 +37,13 @@ signal chaos_meter_changed(value, max_value)
 @onready var skill_map := {
 	Skill.Type.AME_TELEPORT: $Skills/AmeTeleport,
 	Skill.Type.KIARA_SWORD_SHIELD: $Skills/KiaraAttack,
-	Skill.Type.CALLI_SCYTHE: $Skills/CalliScythe
+	Skill.Type.CALLI_SCYTHE: $Skills/CalliScythe,
+	Skill.Type.GURA_SHARK_DIVE: $Skills/GuraDive,
+	Skill.Type.INA_TENTACLES: $Skills/InaTentacles,
 }
 
 var attack_skill: Skill.Type = Skill.Type.CALLI_SCYTHE
-var defense_skill: Skill.Type = Skill.Type.AME_TELEPORT
+var defense_skill: Skill.Type = Skill.Type.INA_TENTACLES
 
 func _ready():
 	animation_player.play("RESET")
@@ -64,7 +65,8 @@ func _ready():
 				skill_map[defense_skill].released(self)
 				
 		if ev.is_action_pressed("special_attack") and chaos_meter >= max_chaos_meter:
-			special_hitbox.attack()
+			pass
+			#special_hitbox.attack()
 	)
 
 func _update_for_current_skills():

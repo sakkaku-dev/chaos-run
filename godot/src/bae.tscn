@@ -1,12 +1,12 @@
-[gd_scene load_steps=44 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=53 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
 [ext_resource type="Script" path="res://src/bae.gd" id="1_uu8pv"]
 [ext_resource type="Script" path="res://src/skills/AmeTeleport.gd" id="2_dyrvv"]
-[ext_resource type="Script" path="res://src/old-system/rpg/HitBox.gd" id="2_e1oce"]
 [ext_resource type="Script" path="res://src/old-system/rpg/rate_limiter.gd" id="3_hvheh"]
 [ext_resource type="Script" path="res://src/old-system/rpg/Hurtbox.gd" id="4_ath4u"]
+[ext_resource type="Texture2D" uid="uid://deedm06plu7s6" path="res://assets/Icon_Ame.png" id="4_ib5uc"]
 [ext_resource type="Shader" path="res://src/simple_circle.gdshader" id="4_lfcma"]
 [ext_resource type="Shader" path="res://src/old-system/shaders/hit.gdshader" id="4_p3cl5"]
 [ext_resource type="Script" path="res://src/skills/SimpleHitAttack.gd" id="6_5my0o"]
@@ -22,19 +22,43 @@
 [ext_resource type="Script" path="res://src/ShaderHitFlash.gd" id="9_bqdnm"]
 [ext_resource type="Script" path="res://src/CircleTimer.gd" id="9_c31dr"]
 [ext_resource type="Texture2D" uid="uid://b7fsp77cpvup8" path="res://assets/Cursor.png" id="9_owcvy"]
+[ext_resource type="Texture2D" uid="uid://ufeoj0yljqyi" path="res://assets/Icon_Kiara.png" id="9_qoi0x"]
 [ext_resource type="Resource" uid="uid://dh40s7ltwnlif" path="res://src/skills/CalliScythe.tres" id="9_uh8mm"]
+[ext_resource type="Texture2D" uid="uid://c536nm63xcefg" path="res://assets/Icon_Calli.png" id="10_6i8od"]
+[ext_resource type="Script" path="res://src/skills/GuraDive.gd" id="10_vg1ia"]
+[ext_resource type="Texture2D" uid="uid://wefkuh407ntl" path="res://assets/Icon_Gura.png" id="11_h7gbh"]
+[ext_resource type="Script" path="res://src/skills/InaTentacles.gd" id="11_u5c5h"]
+[ext_resource type="Texture2D" uid="uid://dtlecoep3f6pa" path="res://assets/Tentacles.png" id="12_5eu7p"]
 [ext_resource type="Script" path="res://src/Gameover.gd" id="12_fcj8v"]
+[ext_resource type="Script" path="res://src/skills/HitBoxAttackResource.gd" id="12_o4enn"]
+[ext_resource type="Texture2D" uid="uid://bkivylqrr6n53" path="res://assets/Icon_Ina.png" id="14_be5ax"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r28m1"]
 shader = ExtResource("4_lfcma")
 shader_parameter/radius = 1.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xkbdw"]
-radius = 98.5089
+[sub_resource type="SpriteFrames" id="SpriteFrames_25j1i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_5eu7p")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fthlt"]
-shader = ExtResource("4_lfcma")
-shader_parameter/radius = 1.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_i1khp"]
+radius = 80.0
+
+[sub_resource type="Resource" id="Resource_2mbve"]
+script = ExtResource("12_o4enn")
+damage = 1
+attack_time = 1.0
+knockback = 300
+attack_shape = SubResource("CircleShape2D_i1khp")
+offset = Vector2(0, 0)
+animation = SubResource("SpriteFrames_25j1i")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vmewj"]
 size = Vector2(14, 18)
@@ -94,22 +118,10 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("SpecialHitBox/ColorRect:visible")
+tracks/3/path = NodePath("CanvasLayer/Gameover:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("CanvasLayer/Gameover:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -213,18 +225,6 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_6o0m3"]
 resource_name = "special"
 length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SpecialHitBox/ColorRect:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y87iq"]
 _data = {
@@ -272,7 +272,7 @@ script = ExtResource("3_hvheh")
 [node name="AmeTeleport" type="Node" parent="Skills" node_paths=PackedStringArray("rect")]
 script = ExtResource("2_dyrvv")
 rect = NodePath("ColorRect")
-icon = ExtResource("7_fdl4x")
+icon = ExtResource("4_ib5uc")
 cooldown = 2.0
 
 [node name="ColorRect" type="ColorRect" parent="Skills/AmeTeleport"]
@@ -294,46 +294,26 @@ color = Color(0.380392, 0.588235, 1, 0.403922)
 script = ExtResource("6_5my0o")
 attack_scene = ExtResource("8_7wopi")
 hitbox_resource = ExtResource("8_xufxf")
-icon = ExtResource("7_fdl4x")
+icon = ExtResource("9_qoi0x")
 cooldown = 0.2
 
 [node name="CalliScythe" type="Node" parent="Skills"]
 script = ExtResource("6_5my0o")
 attack_scene = ExtResource("8_7wopi")
 hitbox_resource = ExtResource("9_uh8mm")
-cooldown = 0.8
+icon = ExtResource("10_6i8od")
 
-[node name="SpecialHitBox" type="Area2D" parent="."]
-position = Vector2(0, -7)
-collision_layer = 0
-collision_mask = 16
-script = ExtResource("2_e1oce")
-damage = 6
-knockback_force = 300
+[node name="GuraDive" type="Node" parent="Skills"]
+script = ExtResource("10_vg1ia")
+icon = ExtResource("11_h7gbh")
+cooldown = 2.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SpecialHitBox"]
-shape = SubResource("CircleShape2D_xkbdw")
-disabled = true
-
-[node name="RateLimiter2" type="Timer" parent="SpecialHitBox"]
-script = ExtResource("3_hvheh")
-
-[node name="ColorRect" type="ColorRect" parent="SpecialHitBox"]
-visible = false
-material = SubResource("ShaderMaterial_fthlt")
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -99.0
-offset_top = -99.0
-offset_right = 99.0
-offset_bottom = 99.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(1, 1, 1, 0.133333)
+[node name="InaTentacles" type="Node" parent="Skills"]
+script = ExtResource("11_u5c5h")
+attack_scene = ExtResource("8_7wopi")
+hitbox_resource = SubResource("Resource_2mbve")
+icon = ExtResource("14_be5ax")
+cooldown = 3.0
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "frame_freeze", "hit_flash", "collision")]
 collision_layer = 8
@@ -519,7 +499,7 @@ texture = ExtResource("7_fdl4x")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Special" node_paths=PackedStringArray("timer")]
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Special"]
 material = SubResource("ShaderMaterial_a3145")
 layout_mode = 1
 anchors_preset = 15
@@ -528,7 +508,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_c31dr")
-timer = NodePath("../../../../../../../SpecialHitBox/RateLimiter2")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Special"]
 layout_mode = 1
@@ -579,6 +558,4 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Try again"
 
-[connection signal="attack_finish" from="SpecialHitBox" to="SpecialHitBox/ColorRect" method="hide"]
-[connection signal="attack_start" from="SpecialHitBox" to="SpecialHitBox/ColorRect" method="show"]
 [connection signal="zero_health" from="HurtBox/Health" to="." method="_on_health_zero_health"]
