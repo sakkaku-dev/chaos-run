@@ -38,9 +38,10 @@ signal chaos_meter_changed(value, max_value)
 @onready var skill_map := {
 	Skill.Type.AME_TELEPORT: $Skills/AmeTeleport,
 	Skill.Type.KIARA_SWORD_SHIELD: $Skills/KiaraAttack,
+	Skill.Type.CALLI_SCYTHE: $Skills/CalliScythe
 }
 
-var attack_skill: Skill.Type = Skill.Type.KIARA_SWORD_SHIELD
+var attack_skill: Skill.Type = Skill.Type.CALLI_SCYTHE
 var defense_skill: Skill.Type = Skill.Type.AME_TELEPORT
 
 func _ready():

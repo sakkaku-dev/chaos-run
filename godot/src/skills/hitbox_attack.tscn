@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqimjkhl2w5rr"]
 
-[ext_resource type="Script" path="res://src/old-system/rpg/OneshotHit.gd" id="1_rpk4q"]
+[ext_resource type="Script" path="res://src/old-system/rpg/OneshotHit.gd" id="1_u5rew"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eafcc"]
 size = Vector2(10, 20)
@@ -8,7 +8,7 @@ size = Vector2(10, 20)
 [node name="HitBox" type="Area2D"]
 collision_layer = 0
 collision_mask = 16
-script = ExtResource("1_rpk4q")
+script = ExtResource("1_u5rew")
 knockback_force = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

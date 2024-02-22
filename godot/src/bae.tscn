@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=44 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -9,18 +9,20 @@
 [ext_resource type="Script" path="res://src/old-system/rpg/Hurtbox.gd" id="4_ath4u"]
 [ext_resource type="Shader" path="res://src/simple_circle.gdshader" id="4_lfcma"]
 [ext_resource type="Shader" path="res://src/old-system/shaders/hit.gdshader" id="4_p3cl5"]
-[ext_resource type="Script" path="res://src/skills/KiaraAttack.gd" id="5_rn1b7"]
+[ext_resource type="Script" path="res://src/skills/SimpleHitAttack.gd" id="6_5my0o"]
 [ext_resource type="Script" path="res://src/old-system/rpg/health.gd" id="7_0gixn"]
 [ext_resource type="Theme" uid="uid://b7kuxx763de25" path="res://theme/theme.tres" id="7_01g6y"]
 [ext_resource type="Shader" path="res://src/circle.gdshader" id="7_85w35"]
 [ext_resource type="Script" path="res://src/HpBar.gd" id="7_abq4l"]
 [ext_resource type="Texture2D" uid="uid://bwve2nq30wldn" path="res://icon.svg" id="7_fdl4x"]
-[ext_resource type="PackedScene" uid="uid://cqimjkhl2w5rr" path="res://src/skills/kiara_attack.tscn" id="8_7wopi"]
+[ext_resource type="PackedScene" uid="uid://cqimjkhl2w5rr" path="res://src/skills/hitbox_attack.tscn" id="8_7wopi"]
 [ext_resource type="Texture2D" uid="uid://cr5lgys0l5syn" path="res://assets/tilemap_packed.png" id="8_e4cu6"]
 [ext_resource type="Script" path="res://src/old-system/FrameFreeze.gd" id="8_s1lnb"]
+[ext_resource type="Resource" uid="uid://7bsncgkxat66" path="res://src/skills/KiaraAttack.tres" id="8_xufxf"]
 [ext_resource type="Script" path="res://src/ShaderHitFlash.gd" id="9_bqdnm"]
 [ext_resource type="Script" path="res://src/CircleTimer.gd" id="9_c31dr"]
 [ext_resource type="Texture2D" uid="uid://b7fsp77cpvup8" path="res://assets/Cursor.png" id="9_owcvy"]
+[ext_resource type="Resource" uid="uid://dh40s7ltwnlif" path="res://src/skills/CalliScythe.tres" id="9_uh8mm"]
 [ext_resource type="Script" path="res://src/Gameover.gd" id="12_fcj8v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r28m1"]
@@ -113,6 +115,10 @@ tracks/4/keys = {
 "update": 1,
 "values": [false]
 }
+
+[sub_resource type="Animation" id="Animation_8qaag"]
+resource_name = "ame_teleport"
+length = 0.2
 
 [sub_resource type="Animation" id="Animation_sq686"]
 resource_name = "attack"
@@ -220,10 +226,6 @@ tracks/0/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="Animation" id="Animation_8qaag"]
-resource_name = "ame_teleport"
-length = 0.2
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y87iq"]
 _data = {
 "RESET": SubResource("Animation_yov1s"),
@@ -289,10 +291,17 @@ grow_vertical = 2
 color = Color(0.380392, 0.588235, 1, 0.403922)
 
 [node name="KiaraAttack" type="Node" parent="Skills"]
-script = ExtResource("5_rn1b7")
+script = ExtResource("6_5my0o")
 attack_scene = ExtResource("8_7wopi")
+hitbox_resource = ExtResource("8_xufxf")
 icon = ExtResource("7_fdl4x")
 cooldown = 0.2
+
+[node name="CalliScythe" type="Node" parent="Skills"]
+script = ExtResource("6_5my0o")
+attack_scene = ExtResource("8_7wopi")
+hitbox_resource = ExtResource("9_uh8mm")
+cooldown = 0.8
 
 [node name="SpecialHitBox" type="Area2D" parent="."]
 position = Vector2(0, -7)
