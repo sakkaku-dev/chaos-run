@@ -137,5 +137,10 @@ func follow(node: Node2D):
 
 func unfollow(keep_invincible := 0.5):
 	follow_node = null
-	await get_tree().create_timer(keep_invincible).timeout
+	invincible(keep_invincible)
+
+func invincible(time := 0.5):
+	collision_shape_2d.disabled = true
+	await get_tree().create_timer(time).timeout
 	collision_shape_2d.disabled = false
+	
