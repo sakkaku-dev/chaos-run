@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=48 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://wefkuh407ntl" path="res://assets/Icon_Gura.png" id="11_h7gbh"]
 [ext_resource type="Script" path="res://src/Gameover.gd" id="12_fcj8v"]
 [ext_resource type="PackedScene" uid="uid://c77wbnvg056ri" path="res://src/skills/gura_dive.tscn" id="13_e854t"]
+[ext_resource type="Resource" uid="uid://c5fnofv65s5u6" path="res://src/skills/resource/GuraDive.tres" id="14_x42jw"]
 [ext_resource type="Resource" uid="uid://lyxod4y62k4h" path="res://src/skills/resource/InaTentacles.tres" id="15_ij3a3"]
 [ext_resource type="Texture2D" uid="uid://bkivylqrr6n53" path="res://assets/Icon_Ina.png" id="15_lff3y"]
 [ext_resource type="Script" path="res://src/skills/ChaosRoll.gd" id="15_xxjbs"]
@@ -207,6 +208,7 @@ icon = ExtResource("10_6i8od")
 [node name="GuraDive" type="Node" parent="Skills"]
 script = ExtResource("10_vg1ia")
 attack_scene = ExtResource("13_e854t")
+hitbox_resource = ExtResource("14_x42jw")
 icon = ExtResource("11_h7gbh")
 cooldown = 2.0
 

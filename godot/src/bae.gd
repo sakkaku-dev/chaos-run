@@ -135,9 +135,8 @@ func follow(node: Node2D):
 	follow_node = node
 	collision_shape_2d.disabled = true
 
-func unfollow(keep_invincible := 0.5):
+func unfollow():
 	follow_node = null
-	invincible(keep_invincible)
 
 func invincible(time := 0.5):
 	collision_shape_2d.disabled = true

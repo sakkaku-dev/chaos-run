@@ -19,3 +19,6 @@ func _physics_process(delta):
 	if velocity.length() == 0:
 		attack_finish.emit()
 		queue_free()
+
+func apply(hit_resource: HitBoxAttackResource):
+	hit_box.apply(hit_resource)
