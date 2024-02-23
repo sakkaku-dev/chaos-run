@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="HitBoxAttackResource" load_steps=5 format=3 uid="uid://c5fnofv65s5u6"]
+
+[ext_resource type="Texture2D" uid="uid://hvtaix40mexo" path="res://assets/Skill_GuraDive.png" id="1_1dr13"]
+[ext_resource type="Script" path="res://src/skills/HitBoxAttackResource.gd" id="2_kaioo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tir7d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_1dr13")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ccl36"]
+size = Vector2(40, 25)
+
+[resource]
+script = ExtResource("2_kaioo")
+damage = 3
+attack_time = 0.1
+knockback = 200
+attack_shape = SubResource("RectangleShape2D_ccl36")
+offset = Vector2(10, 0)
+animation = SubResource("SpriteFrames_tir7d")

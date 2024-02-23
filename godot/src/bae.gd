@@ -46,13 +46,14 @@ signal chaos_meter_changed(value, max_value)
 	Skill.Type.INA_TENTACLES: $Skills/InaTentacles,
 }
 
-var attack_skill: Skill.Type = Skill.Type.KIARA_SWORD_SHIELD
-var defense_skill: Skill.Type = Skill.Type.GURA_SHARK_DIVE
+var attack_skill: Skill.Type
+var defense_skill: Skill.Type
 
 var follow_node
 
 func _ready():
 	animation_player.play("RESET")
+	_roll_random_skills()
 	_update_for_current_skills(true)
 	
 	player_input.on_event.connect(func(ev: InputEvent):
@@ -75,6 +76,18 @@ func _ready():
 				special_timer.run()
 				chaos_roll.released(self)
 	)
+	
+	GameManager.chaos_roll.connect(func(num):
+		_roll_random_skills()
+		_update_for_current_skills()
+	)
+
+func _roll_random_skills():
+	var available := Skill.Type.values().filter(func(x): return x != attack_skill and x != defense_skill)
+	attack_skill = available.pick_random()
+	
+	available.erase(attack_skill)
+	defense_skill = available.pick_random()
 
 func _update_for_current_skills(init = false):
 	var attack = skill_map[attack_skill]

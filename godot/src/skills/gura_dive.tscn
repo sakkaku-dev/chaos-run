@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c77wbnvg056ri"]
+[gd_scene load_steps=7 format=3 uid="uid://c77wbnvg056ri"]
 
 [ext_resource type="Script" path="res://src/skills/gura_dive.gd" id="1_3rw1u"]
 [ext_resource type="Texture2D" uid="uid://hvtaix40mexo" path="res://assets/Skill_GuraDive.png" id="2_dmeus"]
+[ext_resource type="Resource" uid="uid://c5fnofv65s5u6" path="res://src/skills/resource/GuraDive.tres" id="3_4l8wh"]
 [ext_resource type="Script" path="res://src/old-system/rpg/HitBox.gd" id="3_vjqww"]
+[ext_resource type="PackedScene" uid="uid://cqimjkhl2w5rr" path="res://src/skills/hitbox_attack.tscn" id="5_m17w5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ukgua"]
 size = Vector2(40, 25)
@@ -10,7 +12,12 @@ size = Vector2(40, 25)
 [node name="GuraDive" type="CharacterBody2D"]
 script = ExtResource("1_3rw1u")
 
+[node name="HitBox" parent="." instance=ExtResource("5_m17w5")]
+hit_resource = ExtResource("3_4l8wh")
+autostart = false
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(7, -1)
 texture = ExtResource("2_dmeus")
 

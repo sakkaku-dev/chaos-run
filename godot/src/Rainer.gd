@@ -6,7 +6,7 @@ extends Node2D
 @export var rain_time := 8.0
 @export var rain_spawn_gap_time := 0.5
 
-@onready var range = get_viewport_rect().size / 2
+@onready var range = get_viewport_rect().size / 3
 
 var raining_object
 
@@ -25,8 +25,8 @@ func rain_spawn():
 	if not raining_object or get_tree().paused: return
 	
 	var dir = Vector2.RIGHT.rotated(randf_range(0, TAU))
-	var dist = randf_range(0, 1)
-	var pos = global_position + dir * range * dist
+	var dist = randfn(50, 20)
+	var pos = global_position + dir * dist
 	
 	var obj = drop_scene.instantiate()
 	obj.scene = raining_object

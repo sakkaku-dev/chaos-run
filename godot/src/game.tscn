@@ -1,9 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://di8g8e6s34cik"]
+[gd_scene load_steps=14 format=3 uid="uid://di8g8e6s34cik"]
 
 [ext_resource type="Texture2D" uid="uid://bxyqf450fuup3" path="res://assets/0x72_DungeonTilesetII_v1.6.png" id="1_ehh2i"]
 [ext_resource type="Script" path="res://src/game.gd" id="1_j408l"]
 [ext_resource type="Script" path="res://src/InfiniteMap.gd" id="1_qqph6"]
-[ext_resource type="Texture2D" uid="uid://dcev8jrjk4cj7" path="res://assets/Tiles.png" id="1_y4cty"]
 [ext_resource type="PackedScene" uid="uid://i56s2i06l4i8" path="res://src/enemy.tscn" id="2_dcu8q"]
 [ext_resource type="PackedScene" uid="uid://rdrfy4i51cl8" path="res://src/bae.tscn" id="3_60u3f"]
 [ext_resource type="Script" path="res://src/IncreasingTimer.gd" id="7_jguxi"]
@@ -648,16 +647,7 @@ texture = ExtResource("1_ehh2i")
 15:28/0 = 0
 16:28/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7pusc"]
-texture = ExtResource("1_y4cty")
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-
 [sub_resource type="TileSet" id="TileSet_3j8b7"]
-sources/1 = SubResource("TileSetAtlasSource_7pusc")
 sources/0 = SubResource("TileSetAtlasSource_7p5h0")
 pattern_0 = SubResource("TileMapPattern_mc65i")
 

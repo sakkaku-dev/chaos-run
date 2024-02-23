@@ -43,7 +43,7 @@ script = ExtResource("1_engoq")
 process_mode = 3
 sprite_frames = SubResource("SpriteFrames_rgp1j")
 autoplay = "default"
-frame_progress = 0.820424
+frame_progress = 0.0394207
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 0

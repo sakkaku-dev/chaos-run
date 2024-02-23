@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="HitBoxAttackResource" load_steps=5 format=3 uid="uid://lyxod4y62k4h"]
+
+[ext_resource type="Texture2D" uid="uid://dtlecoep3f6pa" path="res://assets/Tentacles.png" id="1_ot8wo"]
+[ext_resource type="Script" path="res://src/skills/HitBoxAttackResource.gd" id="2_hfevr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6fg4x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ot8wo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7ddni"]
+radius = 80.0
+
+[resource]
+script = ExtResource("2_hfevr")
+damage = 2
+attack_time = 0.5
+knockback = 250
+attack_shape = SubResource("CircleShape2D_7ddni")
+offset = Vector2(0, 0)
+animation = SubResource("SpriteFrames_6fg4x")

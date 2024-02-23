@@ -17,6 +17,12 @@ func _ready():
 			_do_damage(area)
 	)
 
+func update_hit_resource(resource: HitBoxAttackResource):
+	damage = resource.damage
+	knockback_force = resource.knockback
+	attack_time = resource.attack_time
+	collision.shape = resource.attack_shape
+
 func attack():
 	attack_start.emit()
 	collision.disabled = false

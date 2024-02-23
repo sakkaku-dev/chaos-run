@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=47 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -16,19 +16,21 @@
 [ext_resource type="Script" path="res://src/HpBar.gd" id="7_abq4l"]
 [ext_resource type="Texture2D" uid="uid://bwve2nq30wldn" path="res://icon.svg" id="7_fdl4x"]
 [ext_resource type="PackedScene" uid="uid://cqimjkhl2w5rr" path="res://src/skills/hitbox_attack.tscn" id="8_7wopi"]
+[ext_resource type="Resource" uid="uid://7bsncgkxat66" path="res://src/skills/resource/KiaraAttack.tres" id="8_87hd8"]
 [ext_resource type="Texture2D" uid="uid://cr5lgys0l5syn" path="res://assets/tilemap_packed.png" id="8_e4cu6"]
 [ext_resource type="Script" path="res://src/old-system/FrameFreeze.gd" id="8_s1lnb"]
-[ext_resource type="Resource" uid="uid://7bsncgkxat66" path="res://src/skills/KiaraAttack.tres" id="8_xufxf"]
 [ext_resource type="Script" path="res://src/ShaderHitFlash.gd" id="9_bqdnm"]
 [ext_resource type="Script" path="res://src/CircleTimer.gd" id="9_c31dr"]
 [ext_resource type="Texture2D" uid="uid://b7fsp77cpvup8" path="res://assets/Cursor.png" id="9_owcvy"]
 [ext_resource type="Texture2D" uid="uid://ufeoj0yljqyi" path="res://assets/Icon_Kiara.png" id="9_qoi0x"]
-[ext_resource type="Resource" uid="uid://dh40s7ltwnlif" path="res://src/skills/CalliScythe.tres" id="9_uh8mm"]
+[ext_resource type="Resource" uid="uid://dh40s7ltwnlif" path="res://src/skills/resource/CalliScythe.tres" id="10_6b7ml"]
 [ext_resource type="Texture2D" uid="uid://c536nm63xcefg" path="res://assets/Icon_Calli.png" id="10_6i8od"]
 [ext_resource type="Script" path="res://src/skills/GuraDive.gd" id="10_vg1ia"]
 [ext_resource type="Texture2D" uid="uid://wefkuh407ntl" path="res://assets/Icon_Gura.png" id="11_h7gbh"]
 [ext_resource type="Script" path="res://src/Gameover.gd" id="12_fcj8v"]
 [ext_resource type="PackedScene" uid="uid://c77wbnvg056ri" path="res://src/skills/gura_dive.tscn" id="13_e854t"]
+[ext_resource type="Resource" uid="uid://lyxod4y62k4h" path="res://src/skills/resource/InaTentacles.tres" id="15_ij3a3"]
+[ext_resource type="Texture2D" uid="uid://bkivylqrr6n53" path="res://assets/Icon_Ina.png" id="15_lff3y"]
 [ext_resource type="Script" path="res://src/skills/ChaosRoll.gd" id="15_xxjbs"]
 [ext_resource type="PackedScene" uid="uid://ll72mt1gbjn4" path="res://src/skills/dice.tscn" id="16_3mfjx"]
 
@@ -192,14 +194,14 @@ color = Color(0.380392, 0.588235, 1, 0.403922)
 [node name="KiaraAttack" type="Node" parent="Skills"]
 script = ExtResource("6_5my0o")
 attack_scene = ExtResource("8_7wopi")
-hitbox_resource = ExtResource("8_xufxf")
+hitbox_resource = ExtResource("8_87hd8")
 icon = ExtResource("9_qoi0x")
 cooldown = 0.2
 
 [node name="CalliScythe" type="Node" parent="Skills"]
 script = ExtResource("6_5my0o")
 attack_scene = ExtResource("8_7wopi")
-hitbox_resource = ExtResource("9_uh8mm")
+hitbox_resource = ExtResource("10_6b7ml")
 icon = ExtResource("10_6i8od")
 
 [node name="GuraDive" type="Node" parent="Skills"]
@@ -210,6 +212,10 @@ cooldown = 2.0
 
 [node name="InaTentacles" type="Node" parent="Skills"]
 script = ExtResource("6_5my0o")
+attack_scene = ExtResource("8_7wopi")
+hitbox_resource = ExtResource("15_ij3a3")
+to_hand = false
+icon = ExtResource("15_lff3y")
 cooldown = 3.0
 
 [node name="ChaosRoll" type="Node" parent="Skills"]

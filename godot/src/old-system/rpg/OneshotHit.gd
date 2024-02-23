@@ -5,19 +5,22 @@ extends HitBox
 
 @onready var original_pos = collision_shape_2d.position
 
+@export var hit_resource: HitBoxAttackResource
+@export var autostart := true
+
 func _ready():
 	super._ready()
-	attack()
-	attack_finish.connect(func(): queue_free())
+	
+	if autostart:
+		attack()
+		attack_finish.connect(func(): queue_free())
+
+	if hit_resource:
+		apply(hit_resource)
 
 func apply(res: HitBoxAttackResource):
 	animated_sprite_2d.sprite_frames = res.animation
 	animated_sprite_2d.play("default")
 	
-	collision_shape_2d.shape = res.attack_shape
+	update_hit_resource(res)
 	collision_shape_2d.position = original_pos + res.offset
-	
-	
-	damage = res.damage
-	attack_time = res.attack_time
-	knockback_force = res.knockback
