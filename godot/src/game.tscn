@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://di8g8e6s34cik"]
+[gd_scene load_steps=16 format=3 uid="uid://di8g8e6s34cik"]
 
 [ext_resource type="Texture2D" uid="uid://bxyqf450fuup3" path="res://assets/0x72_DungeonTilesetII_v1.6.png" id="1_ehh2i"]
 [ext_resource type="Script" path="res://src/game.gd" id="1_j408l"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://5a2vjs7l4vvi" path="res://src/drop_scene.tscn" id="8_4enqo"]
 [ext_resource type="Theme" uid="uid://b7kuxx763de25" path="res://theme/theme.tres" id="8_5mca8"]
 [ext_resource type="PackedScene" uid="uid://dnuj650nq3u0n" path="res://src/skills/dice_attack.tscn" id="8_t2x8r"]
+[ext_resource type="Script" path="res://src/ChaosMeterLoader.gd" id="9_ra6eq"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_mc65i"]
 tile_data = PackedInt32Array(0, 1, 0, 1, 65537, 0, 2, 131073, 0, 3, 196609, 0)
@@ -651,11 +652,13 @@ texture = ExtResource("1_ehh2i")
 sources/0 = SubResource("TileSetAtlasSource_7p5h0")
 pattern_0 = SubResource("TileMapPattern_mc65i")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_jpyf5"]
+radius = 140.0
+
 [node name="Game" type="Node2D" node_paths=PackedStringArray("player", "enemy_count_label", "enemy_killed_label")]
 script = ExtResource("1_j408l")
 player = NodePath("TileMap/Bae")
 enemy_scene = ExtResource("2_dcu8q")
-max_enemies_for_chaos = 10.0
 enemy_count_label = NodePath("CanvasLayer/VBoxContainer/Enemies")
 enemy_killed_label = NodePath("CanvasLayer/VBoxContainer/Killed")
 
@@ -679,6 +682,15 @@ script = ExtResource("7_mny84")
 enemy_scene = ExtResource("2_dcu8q")
 attack_scene = ExtResource("8_t2x8r")
 drop_scene = ExtResource("8_4enqo")
+
+[node name="ChaosMeterLoader" type="Area2D" parent="TileMap/Bae" node_paths=PackedStringArray("player")]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("9_ra6eq")
+player = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Bae/ChaosMeterLoader"]
+shape = SubResource("CircleShape2D_jpyf5")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
