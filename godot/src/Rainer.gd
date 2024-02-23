@@ -6,6 +6,10 @@ extends Node2D
 @export var rain_time := 8.0
 @export var rain_spawn_gap_time := 0.5
 
+@export var rain_modulate := Color.DARK_GRAY
+@export var normal_modulate := Color.WHITE
+
+@onready var canvas_modulate = $CanvasModulate
 @onready var range = get_viewport_rect().size / 3
 
 var raining_object
@@ -17,8 +21,12 @@ func _ready():
 		else:
 			raining_object = attack_scene
 		
+		canvas_modulate.color = rain_modulate
 		rain_spawn()
-		get_tree().create_timer(rain_time).timeout.connect(func(): raining_object = null)
+		get_tree().create_timer(rain_time).timeout.connect(func():
+			raining_object = null
+			canvas_modulate.color = normal_modulate
+		)
 	)
 
 func rain_spawn():

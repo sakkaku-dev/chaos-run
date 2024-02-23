@@ -19,7 +19,7 @@ size = Vector2(15, 30)
 
 [resource]
 script = ExtResource("1_n5btq")
-damage = 1
+damage = 2
 attack_time = 0.1
 knockback = 100
 attack_shape = SubResource("RectangleShape2D_1pd06")
