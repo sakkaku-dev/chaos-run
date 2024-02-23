@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://5a2vjs7l4vvi"]
+
+[ext_resource type="Script" path="res://src/drop_scene.gd" id="1_c053g"]
+[ext_resource type="Texture2D" uid="uid://cnmvsg4cc603b" path="res://assets/DropShadow.png" id="2_umbmq"]
+
+[node name="DropScene" type="Node2D"]
+script = ExtResource("1_c053g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_umbmq")

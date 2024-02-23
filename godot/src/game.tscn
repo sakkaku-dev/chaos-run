@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://di8g8e6s34cik"]
+[gd_scene load_steps=16 format=3 uid="uid://di8g8e6s34cik"]
 
 [ext_resource type="Texture2D" uid="uid://bxyqf450fuup3" path="res://assets/0x72_DungeonTilesetII_v1.6.png" id="1_ehh2i"]
 [ext_resource type="Script" path="res://src/game.gd" id="1_j408l"]
@@ -7,7 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://i56s2i06l4i8" path="res://src/enemy.tscn" id="2_dcu8q"]
 [ext_resource type="PackedScene" uid="uid://rdrfy4i51cl8" path="res://src/bae.tscn" id="3_60u3f"]
 [ext_resource type="Script" path="res://src/IncreasingTimer.gd" id="7_jguxi"]
+[ext_resource type="Script" path="res://src/Rainer.gd" id="7_mny84"]
+[ext_resource type="PackedScene" uid="uid://5a2vjs7l4vvi" path="res://src/drop_scene.tscn" id="8_4enqo"]
 [ext_resource type="Theme" uid="uid://b7kuxx763de25" path="res://theme/theme.tres" id="8_5mca8"]
+[ext_resource type="PackedScene" uid="uid://dnuj650nq3u0n" path="res://src/skills/dice_attack.tscn" id="8_t2x8r"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_mc65i"]
 tile_data = PackedInt32Array(0, 1, 0, 1, 65537, 0, 2, 131073, 0, 3, 196609, 0)
@@ -662,6 +665,7 @@ pattern_0 = SubResource("TileMapPattern_mc65i")
 script = ExtResource("1_j408l")
 player = NodePath("TileMap/Bae")
 enemy_scene = ExtResource("2_dcu8q")
+max_enemies_for_chaos = 10.0
 enemy_count_label = NodePath("CanvasLayer/VBoxContainer/Enemies")
 enemy_killed_label = NodePath("CanvasLayer/VBoxContainer/Killed")
 
@@ -679,6 +683,12 @@ center_node = NodePath("Bae")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="TileMap/Bae"]
 remote_path = NodePath("../../../Camera2D")
+
+[node name="Rainer" type="Node2D" parent="TileMap/Bae"]
+script = ExtResource("7_mny84")
+enemy_scene = ExtResource("2_dcu8q")
+attack_scene = ExtResource("8_t2x8r")
+drop_scene = ExtResource("8_4enqo")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

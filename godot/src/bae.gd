@@ -19,6 +19,7 @@ signal chaos_meter_changed(value, max_value)
 
 @onready var attack_timer = $AttackTimer
 @onready var defense_timer = $DefenseTimer
+@onready var special_timer = $SpecialTimer
 
 @onready var player_input = $PlayerInput
 @onready var animation_player = $AnimationPlayer
@@ -35,7 +36,8 @@ signal chaos_meter_changed(value, max_value)
 		chaos_meter_bar.max_value = max_chaos_meter
 		
 		special_skill_slot.modulate = Color(.5, .5, .5, .8) if chaos_meter < max_chaos_meter else Color.WHITE
-
+		
+@onready var chaos_roll = $Skills/ChaosRoll
 @onready var skill_map := {
 	Skill.Type.AME_TELEPORT: $Skills/AmeTeleport,
 	Skill.Type.KIARA_SWORD_SHIELD: $Skills/KiaraAttack,
@@ -51,7 +53,7 @@ var follow_node
 
 func _ready():
 	animation_player.play("RESET")
-	_update_for_current_skills()
+	_update_for_current_skills(true)
 	
 	player_input.on_event.connect(func(ev: InputEvent):
 		if not attack_timer.should_wait():
@@ -68,12 +70,13 @@ func _ready():
 				defense_timer.run()
 				skill_map[defense_skill].released(self)
 				
-		if ev.is_action_pressed("special_attack") and chaos_meter >= max_chaos_meter:
-			pass
-			#special_hitbox.attack()
+		if not special_timer.should_wait():
+			if ev.is_action_pressed("special_attack") and chaos_meter >= max_chaos_meter:
+				special_timer.run()
+				chaos_roll.released(self)
 	)
 
-func _update_for_current_skills():
+func _update_for_current_skills(init = false):
 	var attack = skill_map[attack_skill]
 	attack_timer.wait_time = attack.cooldown
 	attack_skill_slot.texture = attack.icon
@@ -81,6 +84,11 @@ func _update_for_current_skills():
 	var defense = skill_map[defense_skill]
 	defense_timer.wait_time = defense.cooldown
 	defense_skill_slot.texture = defense.icon
+	
+	if init:
+		var special = chaos_roll
+		special_timer.wait_time = special.cooldown
+		special_skill_slot.texture = special.icon
 
 func add_to_hand(node: Node2D):
 	hand_root.add_child(node)
@@ -114,6 +122,7 @@ func follow(node: Node2D):
 	follow_node = node
 	collision_shape_2d.disabled = true
 
-func unfollow():
+func unfollow(keep_invincible := 0.5):
 	follow_node = null
+	await get_tree().create_timer(keep_invincible).timeout
 	collision_shape_2d.disabled = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=45 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -29,13 +29,15 @@
 [ext_resource type="Texture2D" uid="uid://wefkuh407ntl" path="res://assets/Icon_Gura.png" id="11_h7gbh"]
 [ext_resource type="Script" path="res://src/Gameover.gd" id="12_fcj8v"]
 [ext_resource type="PackedScene" uid="uid://c77wbnvg056ri" path="res://src/skills/gura_dive.tscn" id="13_e854t"]
+[ext_resource type="Script" path="res://src/skills/ChaosRoll.gd" id="15_xxjbs"]
+[ext_resource type="PackedScene" uid="uid://ll72mt1gbjn4" path="res://src/skills/dice.tscn" id="16_3mfjx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r28m1"]
 shader = ExtResource("4_lfcma")
 shader_parameter/radius = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vmewj"]
-size = Vector2(14, 18)
+size = Vector2(12, 16)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12nwv"]
 bg_color = Color(0.541176, 0.117647, 0.117647, 1)
@@ -80,35 +82,15 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("HurtBox/CollisionShape2D:disabled")
+tracks/2/path = NodePath("CanvasLayer/Gameover:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("CanvasLayer/Gameover:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
 "values": [false]
 }
-
-[sub_resource type="Animation" id="Animation_8qaag"]
-resource_name = "ame_teleport"
-length = 0.2
-
-[sub_resource type="Animation" id="Animation_sq686"]
-resource_name = "attack"
-length = 0.2
 
 [sub_resource type="Animation" id="Animation_ddhmo"]
 resource_name = "idle"
@@ -125,18 +107,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [0, 1]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("HurtBox/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_hnuck"]
@@ -155,60 +125,12 @@ tracks/0/keys = {
 "update": 1,
 "values": [2, 3, 4, 5]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("HurtBox/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_ib6fy"]
-resource_name = "roll"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body:rotation")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 6.28319]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("HurtBox/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="Animation" id="Animation_6o0m3"]
-resource_name = "special"
-length = 0.2
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y87iq"]
 _data = {
 "RESET": SubResource("Animation_yov1s"),
-"ame_teleport": SubResource("Animation_8qaag"),
-"attack": SubResource("Animation_sq686"),
 "idle": SubResource("Animation_ddhmo"),
-"move": SubResource("Animation_hnuck"),
-"roll": SubResource("Animation_ib6fy"),
-"special": SubResource("Animation_6o0m3")
+"move": SubResource("Animation_hnuck")
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ctury"]
@@ -239,6 +161,9 @@ script = ExtResource("3_hvheh")
 
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 0.5
+script = ExtResource("3_hvheh")
+
+[node name="SpecialTimer" type="Timer" parent="."]
 script = ExtResource("3_hvheh")
 
 [node name="Skills" type="Node" parent="."]
@@ -287,6 +212,12 @@ cooldown = 2.0
 script = ExtResource("6_5my0o")
 cooldown = 3.0
 
+[node name="ChaosRoll" type="Node" parent="Skills"]
+script = ExtResource("15_xxjbs")
+dice_scene = ExtResource("16_3mfjx")
+icon = ExtResource("7_fdl4x")
+cooldown = 30.0
+
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "frame_freeze", "hit_flash", "collision")]
 collision_layer = 8
 collision_mask = 0
@@ -300,7 +231,6 @@ collision = NodePath("CollisionShape2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_vmewj")
-disabled = true
 
 [node name="Health" type="Node" parent="HurtBox"]
 script = ExtResource("7_0gixn")
@@ -471,7 +401,7 @@ texture = ExtResource("7_fdl4x")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Special"]
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Special" node_paths=PackedStringArray("timer")]
 material = SubResource("ShaderMaterial_a3145")
 layout_mode = 1
 anchors_preset = 15
@@ -480,6 +410,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("9_c31dr")
+timer = NodePath("../../../../../../../SpecialTimer")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Special"]
 layout_mode = 1
