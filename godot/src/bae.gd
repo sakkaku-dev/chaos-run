@@ -9,6 +9,7 @@ signal chaos_meter_changed(value, max_value)
 @export var roll_speed := 300
 
 @export var max_chaos_meter := 100
+@export var max_cooldown_decrease := 0.5
 
 @export var gameover: Control
 @export var chaos_meter_bar: ProgressBar
@@ -57,23 +58,28 @@ func _ready():
 	_update_for_current_skills(true)
 	
 	player_input.on_event.connect(func(ev: InputEvent):
+		var chaos_percentage = (chaos_meter / max_chaos_meter)
+		var chaos_cooldown_reduction = 1.0 - (chaos_percentage * (1.0 - max_cooldown_decrease))
+
 		if not attack_timer.should_wait():
+			var skill_1: Skill = skill_map[attack_skill]
 			if ev.is_action_pressed("attack"):
-				skill_map[attack_skill].pressed(self)
+				skill_1.pressed(self)
 			elif ev.is_action_released("attack"):
-				attack_timer.run()
-				skill_map[attack_skill].released(self)
+				attack_timer.run(skill_1.cooldown * chaos_cooldown_reduction)
+				skill_1.released(self)
 		
 		if not defense_timer.should_wait():
+			var skill_2: Skill = skill_map[defense_skill]
 			if ev.is_action_pressed("roll"):
-				skill_map[defense_skill].pressed(self)
+				skill_2.pressed(self)
 			elif ev.is_action_released("roll"):
-				defense_timer.run()
-				skill_map[defense_skill].released(self)
+				defense_timer.run(skill_2.cooldown * chaos_cooldown_reduction)
+				skill_2.released(self)
 				
 		if not special_timer.should_wait():
 			if ev.is_action_pressed("special_attack") and chaos_meter >= max_chaos_meter:
-				special_timer.run()
+				special_timer.run(chaos_roll.cooldown * chaos_cooldown_reduction)
 				chaos_roll.released(self)
 	)
 	
