@@ -56,6 +56,7 @@ func _ready():
 	animation_player.play("RESET")
 	_roll_random_skills()
 	_update_for_current_skills(true)
+	self.chaos_meter = 0
 	
 	player_input.on_event.connect(func(ev: InputEvent):
 		var chaos_percentage = (chaos_meter / max_chaos_meter)
@@ -79,6 +80,7 @@ func _ready():
 				
 		if not special_timer.should_wait():
 			if ev.is_action_pressed("special_attack") and chaos_meter >= max_chaos_meter:
+				self.chaos_meter = 0.0
 				special_timer.run(chaos_roll.cooldown * chaos_cooldown_reduction)
 				chaos_roll.released(self)
 	)

@@ -224,7 +224,7 @@ cooldown = 3.0
 script = ExtResource("15_xxjbs")
 dice_scene = ExtResource("16_3mfjx")
 icon = ExtResource("7_fdl4x")
-cooldown = 30.0
+cooldown = 10.0
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "frame_freeze", "hit_flash", "collision")]
 collision_layer = 8
@@ -304,16 +304,15 @@ mouse_filter = 2
 theme = ExtResource("7_01g6y")
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control2"]
-custom_minimum_size = Vector2(80, 5)
+custom_minimum_size = Vector2(80, 3)
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = 10
 anchor_right = 1.0
-offset_left = -80.0
-offset_bottom = 5.0
-grow_horizontal = 0
+offset_bottom = 1.0
+grow_horizontal = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ctury")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3y46c")
+step = 0.001
 value = 50.0
 show_percentage = false
 

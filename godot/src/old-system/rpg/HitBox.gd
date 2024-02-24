@@ -35,4 +35,7 @@ func _do_damage(area: HurtBox):
 	var knockback_dir = global_position.direction_to(area.global_position)
 	if area.damage(dmg, knockback_dir * knockback_force):
 		hit.emit()
+		
+		#if get_collision_mask_value(5):
+		GameManager.hit.emit()
 	

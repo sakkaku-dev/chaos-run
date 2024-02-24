@@ -652,8 +652,8 @@ texture = ExtResource("1_ehh2i")
 sources/0 = SubResource("TileSetAtlasSource_7p5h0")
 pattern_0 = SubResource("TileMapPattern_mc65i")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_41mg3"]
-size = Vector2(308, 166)
+[sub_resource type="CircleShape2D" id="CircleShape2D_wnvtg"]
+radius = 126.02
 
 [node name="Game" type="Node2D" node_paths=PackedStringArray("player", "enemy_count_label", "enemy_killed_label")]
 script = ExtResource("1_j408l")
@@ -689,11 +689,13 @@ drop_scene = ExtResource("8_4enqo")
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("9_ra6eq")
-max_enemies_for_chaos = 20.0
 player = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Bae/ChaosMeterLoader"]
-shape = SubResource("RectangleShape2D_41mg3")
+shape = SubResource("CircleShape2D_wnvtg")
+
+[node name="Timer" type="Timer" parent="TileMap/Bae/ChaosMeterLoader"]
+wait_time = 0.5
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
