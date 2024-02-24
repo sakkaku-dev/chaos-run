@@ -84,7 +84,7 @@ shape = SubResource("RectangleShape2D_qaufs")
 
 [node name="Health" type="Node" parent="Hurtbox"]
 script = ExtResource("4_2pvf1")
-max_health = 10
+max_health = 10.0
 
 [node name="HitFlash" type="Node" parent="Hurtbox" node_paths=PackedStringArray("node")]
 script = ExtResource("6_bpdvi")

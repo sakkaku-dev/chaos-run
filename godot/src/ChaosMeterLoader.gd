@@ -4,8 +4,8 @@ extends Area2D
 
 @export var multipler_for_enemies := 0.001
 @export var multipler_for_hits := 0.05
-
 @export var add_to_chaos_meter_speed := 0.01
+@export var chaos_reduce_amount := 0.005
 
 @onready var timer = $Timer
 
@@ -25,7 +25,9 @@ func _ready():
 
 func _process(_d):
 	var enemy_count = get_overlapping_areas().size()
-	player.chaos_meter += enemy_count * multipler_for_enemies
+	player.chaos_meter -= chaos_reduce_amount
+	
+	#add_to_chaos_meter += enemy_count * multipler_for_enemies
 	
 	if add_to_chaos_meter > 0:
 		var part = add_to_chaos_meter * add_to_chaos_meter_speed

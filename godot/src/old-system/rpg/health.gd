@@ -18,7 +18,6 @@ func _get_max_health():
 	return max_health_value.get_value() if max_health_value else max_health
 
 func _set_health(v: float):
-	print(v)
 	health = clamp(v, 0.0, max_health) 
 	health_changed.emit(health)
 
