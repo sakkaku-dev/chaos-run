@@ -8,7 +8,7 @@ signal chaos_meter_changed(value, max_value)
 @export var speed := 100
 @export var roll_speed := 300
 
-@export var max_chaos_meter := 100
+@export var max_chaos_meter := 100.0
 @export var max_cooldown_decrease := 0.5
 
 @export var gameover: Control

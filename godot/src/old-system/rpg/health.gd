@@ -5,27 +5,28 @@ signal health_changed(hp)
 signal zero_health()
 
 @export var max_health_value: ValueProvider
-@export var max_health := 1
+@export var max_health := 1.0
 @onready var health := max_health : set = _set_health
 
-func hurt(dmg: int):
+func hurt(dmg: float):
 	self.health -= dmg
 
-func heal(amount: int):
+func heal(amount: float):
 	self.health += amount
 
 func _get_max_health():
 	return max_health_value.get_value() if max_health_value else max_health
 
-func _set_health(v: int):
-	health = clamp(v, 0, max_health) 
+func _set_health(v: float):
+	print(v)
+	health = clamp(v, 0.0, max_health) 
 	health_changed.emit(health)
 
 	if is_dead():
 		zero_health.emit()
 
 func is_full_health():
-	return health == max_health
+	return health >= max_health
 
 func is_dead():
 	return health <= 0

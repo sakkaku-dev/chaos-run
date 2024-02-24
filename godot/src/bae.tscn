@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=49 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -34,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://bkivylqrr6n53" path="res://assets/Icon_Ina.png" id="15_lff3y"]
 [ext_resource type="Script" path="res://src/skills/ChaosRoll.gd" id="15_xxjbs"]
 [ext_resource type="PackedScene" uid="uid://ll72mt1gbjn4" path="res://src/skills/dice.tscn" id="16_3mfjx"]
+[ext_resource type="Script" path="res://src/ProgressiveHeal.gd" id="21_x3a1i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r28m1"]
 shader = ExtResource("4_lfcma")
@@ -224,7 +225,12 @@ cooldown = 3.0
 script = ExtResource("15_xxjbs")
 dice_scene = ExtResource("16_3mfjx")
 icon = ExtResource("7_fdl4x")
-cooldown = 10.0
+cooldown = 20.0
+
+[node name="ProgressiveHeal" type="Node" parent="." node_paths=PackedStringArray("player", "health")]
+script = ExtResource("21_x3a1i")
+player = NodePath("..")
+health = NodePath("../HurtBox/Health")
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "frame_freeze", "hit_flash", "collision")]
 collision_layer = 8
@@ -242,7 +248,7 @@ shape = SubResource("RectangleShape2D_vmewj")
 
 [node name="Health" type="Node" parent="HurtBox"]
 script = ExtResource("7_0gixn")
-max_health = 15
+max_health = 200.0
 
 [node name="FrameFreeze" type="Node" parent="HurtBox"]
 script = ExtResource("8_s1lnb")
@@ -270,6 +276,7 @@ offset_bottom = -22.0
 grow_horizontal = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_12nwv")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3qbgh")
+step = 0.001
 show_percentage = false
 script = ExtResource("7_abq4l")
 health = NodePath("../HurtBox/Health")
