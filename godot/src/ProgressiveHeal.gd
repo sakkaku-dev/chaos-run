@@ -1,3 +1,4 @@
+class_name ProgressiveHeal
 extends Node
 
 @export var player: Player

@@ -1,5 +1,6 @@
 shader_type canvas_item;
 
+uniform vec4 color: source_color = vec4(1.0);
 uniform float outer_radius :hint_range(0., 1.) = 1.0;
 uniform float inner_radius :hint_range(0., 1.) = 0.75;
 uniform float turn :hint_range(0., 1.) = 0.0;
@@ -12,13 +13,13 @@ float remap(float i_min, float i_max, float o_min, float o_max, float val) {
 }
 
 vec2 rotate_uv(vec2 uv, vec2 pivot, float rotation) {
-    float cosa = cos(rotation);
-    float sina = sin(rotation);
-    uv -= pivot;
-    return vec2(
-        cosa * uv.x - sina * uv.y,
-        cosa * uv.y + sina * uv.x 
-    ) + pivot;
+	float cosa = cos(rotation);
+	float sina = sin(rotation);
+	uv -= pivot;
+	return vec2(
+		cosa * uv.x - sina * uv.y,
+		cosa * uv.y + sina * uv.x 
+	) + pivot;
 }
 
 float circle(vec2 uv, float value)
@@ -54,10 +55,12 @@ float mask(vec2 uv, float value)
 }
 
 void fragment() {
+	COLOR = color;
+	
 	vec2 uv = (UV * 2.0) - 1.0;
 	vec2 origin = vec2(0.0, 0.0);
 	uv = rotate_uv(uv, origin, turn * TAU);
 	float t = mask(uv, fill_ratio);
 	float c = circle(uv, 0.5);
-	COLOR.a = t * c;
+	COLOR.a *= t * c;
 }

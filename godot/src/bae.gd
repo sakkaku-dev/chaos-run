@@ -52,6 +52,9 @@ var defense_skill: Skill.Type
 
 var follow_node
 
+# not good but it's just a jam anyway
+var enemy_count := 0
+
 func _ready():
 	animation_player.play("RESET")
 	_roll_random_skills()

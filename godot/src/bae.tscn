@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=55 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -24,9 +24,9 @@
 [ext_resource type="Texture2D" uid="uid://b7fsp77cpvup8" path="res://assets/Cursor.png" id="9_owcvy"]
 [ext_resource type="Texture2D" uid="uid://ufeoj0yljqyi" path="res://assets/Icon_Kiara.png" id="9_qoi0x"]
 [ext_resource type="Resource" uid="uid://dh40s7ltwnlif" path="res://src/skills/resource/CalliScythe.tres" id="10_6b7ml"]
-[ext_resource type="Texture2D" uid="uid://c536nm63xcefg" path="res://assets/Icon_Calli.png" id="10_6i8od"]
 [ext_resource type="Script" path="res://src/skills/GuraDive.gd" id="10_vg1ia"]
 [ext_resource type="Texture2D" uid="uid://wefkuh407ntl" path="res://assets/Icon_Gura.png" id="11_h7gbh"]
+[ext_resource type="Texture2D" uid="uid://dvmkbjmibmhyf" path="res://assets/Icon_Calli.jpg" id="11_v71m3"]
 [ext_resource type="Script" path="res://src/Gameover.gd" id="12_fcj8v"]
 [ext_resource type="PackedScene" uid="uid://c77wbnvg056ri" path="res://src/skills/gura_dive.tscn" id="13_e854t"]
 [ext_resource type="Resource" uid="uid://c5fnofv65s5u6" path="res://src/skills/resource/GuraDive.tres" id="14_x42jw"]
@@ -35,6 +35,12 @@
 [ext_resource type="Script" path="res://src/skills/ChaosRoll.gd" id="15_xxjbs"]
 [ext_resource type="PackedScene" uid="uid://ll72mt1gbjn4" path="res://src/skills/dice.tscn" id="16_3mfjx"]
 [ext_resource type="Script" path="res://src/ProgressiveHeal.gd" id="21_x3a1i"]
+[ext_resource type="Texture2D" uid="uid://ehoyca7petcb" path="res://assets/Cube.png" id="32_1815s"]
+[ext_resource type="Texture2D" uid="uid://c0q3lmgi77qi6" path="res://assets/Buff_Health.png" id="32_fhqed"]
+[ext_resource type="Texture2D" uid="uid://bjgaiqxv2f0b5" path="res://assets/BuffUp.png" id="33_2k7fe"]
+[ext_resource type="Texture2D" uid="uid://cie5ksr2sya0f" path="res://assets/Buff_Enemy.png" id="34_8nrvw"]
+[ext_resource type="Texture2D" uid="uid://bll6855bdy356" path="res://assets/Buff_Attack.png" id="36_ninyg"]
+[ext_resource type="Script" path="res://src/EnemyBuff.gd" id="36_vfoui"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r28m1"]
 shader = ExtResource("4_lfcma")
@@ -146,6 +152,7 @@ bg_color = Color(0.729412, 0.254902, 0.254902, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a3145"]
 shader = ExtResource("7_85w35")
+shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/outer_radius = 0.748
 shader_parameter/inner_radius = 0.372
 shader_parameter/turn = 0.0
@@ -155,8 +162,8 @@ shader_parameter/fill_ratio = 1.0
 [node name="Bae" type="CharacterBody2D" node_paths=PackedStringArray("gameover", "chaos_meter_bar", "special_skill_slot", "attack_skill_slot", "defense_skill_slot") groups=["player"]]
 script = ExtResource("1_uu8pv")
 gameover = NodePath("CanvasLayer/Gameover")
-chaos_meter_bar = NodePath("CanvasLayer/Control2/ProgressBar")
-special_skill_slot = NodePath("CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Special")
+chaos_meter_bar = NodePath("CanvasLayer/Control2/HBoxContainer/VBoxContainer/ProgressBar")
+special_skill_slot = NodePath("CanvasLayer/Control2/HBoxContainer/Special")
 attack_skill_slot = NodePath("CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Attack")
 defense_skill_slot = NodePath("CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Defense")
 
@@ -204,7 +211,7 @@ cooldown = 0.2
 script = ExtResource("6_5my0o")
 attack_scene = ExtResource("8_7wopi")
 hitbox_resource = ExtResource("10_6b7ml")
-icon = ExtResource("10_6i8od")
+icon = ExtResource("11_v71m3")
 
 [node name="GuraDive" type="Node" parent="Skills"]
 script = ExtResource("10_vg1ia")
@@ -224,7 +231,7 @@ cooldown = 3.0
 [node name="ChaosRoll" type="Node" parent="Skills"]
 script = ExtResource("15_xxjbs")
 dice_scene = ExtResource("16_3mfjx")
-icon = ExtResource("7_fdl4x")
+icon = ExtResource("32_1815s")
 cooldown = 20.0
 
 [node name="ProgressiveHeal" type="Node" parent="." node_paths=PackedStringArray("player", "health")]
@@ -310,25 +317,236 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("7_01g6y")
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control2"]
-custom_minimum_size = Vector2(80, 3)
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 1.0
+offset_bottom = 3.0
 grow_horizontal = 2
+theme_override_constants/separation = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(80, 10)
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_ctury")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3y46c")
 step = 0.001
 value = 50.0
 show_percentage = false
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-offset_left = 257.0
-offset_top = 155.0
-offset_right = 320.0
-offset_bottom = 180.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+alignment = 2
+
+[node name="AttackBuff" type="TextureRect" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer" node_paths=PackedStringArray("player", "level_1_icon", "level_2_icon")]
+layout_mode = 2
+texture = ExtResource("36_ninyg")
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("36_vfoui")
+player = NodePath("../../../../../../..")
+property = "chaos_meter"
+max_property = "max_chaos_meter"
+level_0_limit = 0.05
+level_0_text = "increase attack speed"
+level_1_icon = NodePath("MarginContainer2/VBoxContainer/TextureRect")
+level_1_limit = 0.5
+level_1_text = "greatly increase attack speed"
+level_2_icon = NodePath("MarginContainer2/VBoxContainer/TextureRect2")
+level_2_limit = 0.8
+level_2_text = "immensely increase attack speed"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/AttackBuff"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -15.0
+offset_top = -13.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = -3
+theme_override_constants/margin_bottom = -3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/AttackBuff/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = -3
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/AttackBuff/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+texture = ExtResource("33_2k7fe")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/AttackBuff/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+texture = ExtResource("33_2k7fe")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="HealthBuff" type="TextureRect" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer" node_paths=PackedStringArray("player", "level_1_icon", "level_2_icon")]
+layout_mode = 2
+texture = ExtResource("32_fhqed")
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("36_vfoui")
+player = NodePath("../../../../../../..")
+property = "chaos_meter"
+max_property = "max_chaos_meter"
+level_0_limit = 0.05
+level_0_text = "slowly regenerate health"
+level_1_icon = NodePath("MarginContainer/VBoxContainer/TextureRect")
+level_1_limit = 0.5
+level_1_text = "regenerate health"
+level_2_icon = NodePath("MarginContainer/VBoxContainer/TextureRect2")
+level_2_limit = 0.8
+level_2_text = "regenerate health fast"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/HealthBuff"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -15.0
+offset_top = -13.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = -3
+theme_override_constants/margin_bottom = -3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/HealthBuff/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = -3
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/HealthBuff/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+texture = ExtResource("33_2k7fe")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/HealthBuff/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+texture = ExtResource("33_2k7fe")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="EnemyBuff" type="TextureRect" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer" node_paths=PackedStringArray("player", "level_1_icon", "level_2_icon")]
+layout_mode = 2
+texture = ExtResource("34_8nrvw")
+expand_mode = 2
+stretch_mode = 5
+script = ExtResource("36_vfoui")
+player = NodePath("../../../../../../..")
+property = "enemy_count"
+level_0_text = "decrease chaos meter reduction"
+level_1_icon = NodePath("MarginContainer2/VBoxContainer/TextureRect")
+level_1_limit = 20.0
+level_1_text = "greatly decrease chaos meter reduction"
+level_2_icon = NodePath("MarginContainer2/VBoxContainer/TextureRect2")
+level_2_limit = 50.0
+level_2_text = "immensely decrease chaos meter reduction"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/EnemyBuff"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -15.0
+offset_top = -13.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = -3
+theme_override_constants/margin_bottom = -3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/EnemyBuff/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = -3
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/EnemyBuff/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+texture = ExtResource("33_2k7fe")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/EnemyBuff/MarginContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+texture = ExtResource("33_2k7fe")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Special" type="TextureRect" parent="CanvasLayer/Control2/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("32_1815s")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Control2/HBoxContainer/Special" node_paths=PackedStringArray("timer")]
+material = SubResource("ShaderMaterial_a3145")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_c31dr")
+timer = NodePath("../../../../../SpecialTimer")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/HBoxContainer/Special"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/HBoxContainer/Special/MarginContainer"]
+texture = ExtResource("8_e4cu6")
+offset = Vector2(4, -4)
+hframes = 34
+vframes = 24
+frame = 87
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -44.0
+offset_top = -25.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_left = 5
@@ -341,9 +559,10 @@ layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 15
 
 [node name="Attack" type="TextureRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(15, 15)
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("7_fdl4x")
 expand_mode = 2
@@ -368,7 +587,6 @@ anchor_right = 1.0
 grow_horizontal = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Attack/MarginContainer"]
-scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_e4cu6")
 offset = Vector2(-3, 3)
 hframes = 34
@@ -401,45 +619,11 @@ anchor_right = 1.0
 grow_horizontal = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Defense/MarginContainer"]
-scale = Vector2(0.5, 0.5)
 texture = ExtResource("8_e4cu6")
 offset = Vector2(-3, 3)
 hframes = 34
 vframes = 24
 frame = 78
-
-[node name="Special" type="TextureRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(15, 15)
-layout_mode = 2
-texture = ExtResource("7_fdl4x")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Special" node_paths=PackedStringArray("timer")]
-material = SubResource("ShaderMaterial_a3145")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("9_c31dr")
-timer = NodePath("../../../../../../../SpecialTimer")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Special"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-grow_horizontal = 0
-
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Special/MarginContainer"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_e4cu6")
-offset = Vector2(-3, 3)
-hframes = 34
-vframes = 24
-frame = 87
 
 [node name="Gameover" type="ColorRect" parent="CanvasLayer" node_paths=PackedStringArray("restart")]
 process_mode = 3
@@ -464,10 +648,11 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Gameover/CenterContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="Label" type="Label" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 34
 text = "Gameover"
 horizontal_alignment = 1
 
