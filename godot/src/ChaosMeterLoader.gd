@@ -14,7 +14,7 @@ var hits_within_timeframe := 0.0
 var add_to_chaos_meter := 0.0
 
 func _ready():
-	GameManager.chaos_roll.connect(func(): add_to_chaos_meter = 0)
+	GameManager.chaos_roll.connect(func(_x): add_to_chaos_meter = 0)
 	GameManager.hit.connect(func():
 		if timer.is_stopped():
 			timer.start()
