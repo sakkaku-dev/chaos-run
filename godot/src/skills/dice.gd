@@ -5,11 +5,16 @@ extends Node2D
 
 @onready var dice = $Dice
 @onready var dice_number = $DiceNumber
+@onready var dice_roll = $DiceRoll
 
 func _ready():
 	dice.play("roll")
+	dice_roll.play()
 	dice_number.hide()
 	await get_tree().create_timer(roll_time).timeout
+	
+	var tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tw.tween_property(dice_roll, "volume_db", -30, 0.5)
 	
 	var num = randi_range(1, 6)
 	dice_number.frame = num - 1

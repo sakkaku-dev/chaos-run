@@ -258,6 +258,7 @@ cooldown = 20.0
 script = ExtResource("21_x3a1i")
 player = NodePath("..")
 health = NodePath("../HurtBox/Health")
+max_heal = 0.075
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "hit_sound", "frame_freeze", "hit_flash", "collision")]
 collision_layer = 8

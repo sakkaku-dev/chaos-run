@@ -27,8 +27,12 @@ func _update_labels():
 	enemy_killed_label.text = "Killed: %s" % enemy_killed
 
 func _spawn_enemy():
-	# prevent lagging
-	if enemy_count >= 150: return
+	# prevent lagging by removing enemies within a large group
+	if enemy_count >= 150:
+		for e in get_tree().get_nodes_in_group("enemy"):
+			if e.get_nearby_enemy_count() > 8:
+				e.queue_free()
+				break
 	
 	var enemy = enemy_scene.instantiate()
 	tile_map.add_child(enemy)

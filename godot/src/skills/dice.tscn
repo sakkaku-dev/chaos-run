@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://ll72mt1gbjn4"]
+[gd_scene load_steps=10 format=3 uid="uid://ll72mt1gbjn4"]
 
 [ext_resource type="Script" path="res://src/skills/dice.gd" id="1_m1x0t"]
 [ext_resource type="Texture2D" uid="uid://ewmux4ami7nf" path="res://assets/Dice_Number.png" id="2_5dl0g"]
 [ext_resource type="Texture2D" uid="uid://cliykb4skn0ry" path="res://assets/Dice_Roll.png" id="2_uq6gh"]
+[ext_resource type="AudioStream" uid="uid://dk0aiwwt0hvlu" path="res://assets/sound/dice-roll.mp3" id="4_l18b8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pn0ow"]
 atlas = ExtResource("2_uq6gh")
@@ -54,3 +55,7 @@ sprite_frames = SubResource("SpriteFrames_p6xx3")
 [node name="DiceNumber" type="Sprite2D" parent="."]
 texture = ExtResource("2_5dl0g")
 hframes = 6
+
+[node name="DiceRoll" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_l18b8")
+volume_db = -5.0

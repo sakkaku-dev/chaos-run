@@ -705,7 +705,7 @@ zoom = Vector2(2.5, 2.5)
 autostart = true
 script = ExtResource("7_jguxi")
 max_time = 0.8
-increase_value = 0.98
+increase_value = 0.5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false

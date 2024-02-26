@@ -23,3 +23,6 @@ func _on_hurtbox_knockback(dir):
 func _on_health_zero_health():
 	died.emit()
 	queue_free()
+
+func get_nearby_enemy_count():
+	return soft_collision.get_overlapping_areas().size()
