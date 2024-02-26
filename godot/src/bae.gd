@@ -48,7 +48,7 @@ signal chaos_meter_changed(value, max_value)
 		elif dice_ready and chaos_meter < max_chaos_meter - 1:
 			dice_ready = false
 		
-		special_skill_slot.modulate = Color(.5, .5, .5, .8) if chaos_meter < max_chaos_meter else Color.WHITE
+		special_skill_slot.modulate = Color(.5, .5, .5, .8) if chaos_meter < max_chaos_meter and not rolling_dice else Color.WHITE
 		
 @onready var chaos_roll = $Skills/ChaosRoll
 @onready var skill_map := {
@@ -64,6 +64,7 @@ var attack_skill: Skill.Type
 var defense_skill: Skill.Type
 
 var follow_node
+var rolling_dice := false
 
 # not good but it's just a jam anyway
 var enemy_count := 0
@@ -97,10 +98,12 @@ func _ready():
 				defense_sound.play()
 				
 		if not special_timer.should_wait():
-			if ev.is_action_pressed("special_attack") and chaos_meter >= max_chaos_meter:
+			if ev.is_action_pressed("special_attack") and chaos_meter >= max_chaos_meter and not rolling_dice:
 				self.chaos_meter = 0.0
+				rolling_dice = true
+				await chaos_roll.released(self)
 				special_timer.run(chaos_roll.cooldown * chaos_cooldown_reduction)
-				chaos_roll.released(self)
+				rolling_dice = false
 	)
 	
 	GameManager.chaos_roll.connect(func(num):

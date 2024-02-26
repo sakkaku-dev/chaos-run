@@ -247,9 +247,10 @@ icon = ExtResource("15_lff3y")
 cooldown = 3.0
 sound = ExtResource("22_j8rv7")
 
-[node name="ChaosRoll" type="Node" parent="Skills"]
+[node name="ChaosRoll" type="Node" parent="Skills" node_paths=PackedStringArray("dice_slot")]
 script = ExtResource("15_xxjbs")
 dice_scene = ExtResource("16_3mfjx")
+dice_slot = NodePath("../../CanvasLayer/Control2/HBoxContainer/Special/Control")
 icon = ExtResource("32_1815s")
 cooldown = 20.0
 
@@ -346,7 +347,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 3.0
 grow_horizontal = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = -1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control2/HBoxContainer"]
 layout_mode = 2
@@ -530,22 +531,13 @@ expand_mode = 2
 stretch_mode = 5
 
 [node name="Special" type="TextureRect" parent="CanvasLayer/Control2/HBoxContainer"]
-custom_minimum_size = Vector2(15, 15)
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
 texture = ExtResource("32_1815s")
-expand_mode = 2
+expand_mode = 3
 stretch_mode = 5
-
-[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Control2/HBoxContainer/Special" node_paths=PackedStringArray("timer")]
-material = SubResource("ShaderMaterial_a3145")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("9_c31dr")
-timer = NodePath("../../../../../SpecialTimer")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/HBoxContainer/Special"]
 layout_mode = 1
@@ -560,6 +552,29 @@ offset = Vector2(4, -4)
 hframes = 34
 vframes = 24
 frame = 87
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Control2/HBoxContainer/Special" node_paths=PackedStringArray("timer")]
+material = SubResource("ShaderMaterial_a3145")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_c31dr")
+timer = NodePath("../../../../../SpecialTimer")
+
+[node name="Control" type="Control" parent="CanvasLayer/Control2/HBoxContainer/Special"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 0.428558
+offset_right = 0.428558
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2"]
 layout_mode = 1

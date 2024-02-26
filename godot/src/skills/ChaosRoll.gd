@@ -1,8 +1,9 @@
 extends Skill
 
 @export var dice_scene: PackedScene
+@export var dice_slot: Control
 
 func released(p: Player):
 	var dice = dice_scene.instantiate()
-	get_tree().current_scene.add_child(dice)
-	dice.global_position = p.global_position
+	dice_slot.add_child(dice)
+	await GameManager.chaos_roll

@@ -6,6 +6,7 @@ extends Area2D
 @export var multipler_for_hits := 0.05
 @export var add_to_chaos_meter_speed := 0.01
 @export var chaos_reduce_amount := 0.02
+@export var max_hits := 20
 
 @onready var timer = $Timer
 
@@ -19,7 +20,8 @@ func _ready():
 		hits_within_timeframe += 1
 	)
 	timer.timeout.connect(func():
-		add_to_chaos_meter += hits_within_timeframe * hits_within_timeframe * multipler_for_hits
+		var hits = min(hits_within_timeframe, max_hits)
+		add_to_chaos_meter += hits * hits * multipler_for_hits
 		hits_within_timeframe = 0
 	)
 
