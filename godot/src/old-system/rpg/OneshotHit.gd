@@ -11,7 +11,6 @@ func _ready():
 	super._ready()
 	
 	if autostart:
-		attack()
 		attack_finish.connect(func(): queue_free())
 
 func apply(res: HitBoxAttackResource):

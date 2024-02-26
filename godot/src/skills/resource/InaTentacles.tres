@@ -9,7 +9,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("1_ot8wo")
 }],
-"loop": true,
+"loop": false,
 "name": &"default",
 "speed": 5.0
 }]
@@ -20,7 +20,7 @@ radius = 80.0
 [resource]
 script = ExtResource("2_hfevr")
 damage = 2
-attack_time = 0.5
+attack_time = 0.3
 knockback = 200
 attack_shape = SubResource("CircleShape2D_7ddni")
 offset = Vector2(0, 0)

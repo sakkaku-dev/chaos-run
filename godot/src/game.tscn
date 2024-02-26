@@ -11,7 +11,7 @@
 [ext_resource type="Theme" uid="uid://b7kuxx763de25" path="res://theme/theme.tres" id="8_5mca8"]
 [ext_resource type="PackedScene" uid="uid://dnuj650nq3u0n" path="res://src/skills/dice_attack.tscn" id="8_t2x8r"]
 [ext_resource type="Script" path="res://src/ChaosMeterLoader.gd" id="9_ra6eq"]
-[ext_resource type="AudioStream" uid="uid://dqgcot7y1opqa" path="res://assets/sound/Knock it out!_Inst_hololive_202402270353.mp3" id="12_qupnv"]
+[ext_resource type="AudioStream" uid="uid://bbyt3oe3mghyf" path="res://assets/sound/Play Dice!_Inst_hololive_202402270353.mp3" id="12_xhm30"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_mc65i"]
 tile_data = PackedInt32Array(0, 1, 0, 1, 65537, 0, 2, 131073, 0, 3, 196609, 0)
@@ -725,6 +725,6 @@ layout_mode = 2
 text = "Killed"
 
 [node name="BGM" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("12_qupnv")
+stream = ExtResource("12_xhm30")
 volume_db = -25.0
 autoplay = true

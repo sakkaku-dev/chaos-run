@@ -10,4 +10,6 @@ func released(p: Player):
 		p.add_to_hand(attack)
 	else:
 		p.add_child(attack)
+		
 	attack.apply(hitbox_resource)
+	attack.attack()

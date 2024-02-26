@@ -20,7 +20,7 @@ size = Vector2(40, 80)
 [resource]
 script = ExtResource("1_7layt")
 damage = 4
-attack_time = 0.3
+attack_time = 0.1
 knockback = 100
 attack_shape = SubResource("RectangleShape2D_f76ra")
 offset = Vector2(35, 0)
