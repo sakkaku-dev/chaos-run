@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=63 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://deedm06plu7s6" path="res://assets/Icon_Ame.png" id="4_ib5uc"]
 [ext_resource type="Shader" path="res://src/simple_circle.gdshader" id="4_lfcma"]
 [ext_resource type="Shader" path="res://src/old-system/shaders/hit.gdshader" id="4_p3cl5"]
+[ext_resource type="AudioStream" uid="uid://k65kqc85my2c" path="res://assets/sound/tp.wav" id="5_e8kua"]
 [ext_resource type="Script" path="res://src/skills/SimpleHitAttack.gd" id="6_5my0o"]
 [ext_resource type="Script" path="res://src/old-system/rpg/health.gd" id="7_0gixn"]
 [ext_resource type="Theme" uid="uid://b7kuxx763de25" path="res://theme/theme.tres" id="7_01g6y"]
@@ -24,23 +25,30 @@
 [ext_resource type="Texture2D" uid="uid://b7fsp77cpvup8" path="res://assets/Cursor.png" id="9_owcvy"]
 [ext_resource type="Texture2D" uid="uid://ufeoj0yljqyi" path="res://assets/Icon_Kiara.png" id="9_qoi0x"]
 [ext_resource type="Resource" uid="uid://dh40s7ltwnlif" path="res://src/skills/resource/CalliScythe.tres" id="10_6b7ml"]
+[ext_resource type="AudioStream" uid="uid://dxpyrplfh1kd3" path="res://assets/sound/剣の素振り3.mp3" id="10_7iu87"]
 [ext_resource type="Script" path="res://src/skills/GuraDive.gd" id="10_vg1ia"]
 [ext_resource type="Texture2D" uid="uid://wefkuh407ntl" path="res://assets/Icon_Gura.png" id="11_h7gbh"]
 [ext_resource type="Texture2D" uid="uid://dvmkbjmibmhyf" path="res://assets/Icon_Calli.jpg" id="11_v71m3"]
 [ext_resource type="Script" path="res://src/Gameover.gd" id="12_fcj8v"]
 [ext_resource type="PackedScene" uid="uid://c77wbnvg056ri" path="res://src/skills/gura_dive.tscn" id="13_e854t"]
+[ext_resource type="AudioStream" uid="uid://c8464fj52sokv" path="res://assets/sound/剣の素振り1.mp3" id="13_xpmo7"]
 [ext_resource type="Resource" uid="uid://c5fnofv65s5u6" path="res://src/skills/resource/GuraDive.tres" id="14_x42jw"]
 [ext_resource type="Resource" uid="uid://lyxod4y62k4h" path="res://src/skills/resource/InaTentacles.tres" id="15_ij3a3"]
 [ext_resource type="Texture2D" uid="uid://bkivylqrr6n53" path="res://assets/Icon_Ina.png" id="15_lff3y"]
 [ext_resource type="Script" path="res://src/skills/ChaosRoll.gd" id="15_xxjbs"]
 [ext_resource type="PackedScene" uid="uid://ll72mt1gbjn4" path="res://src/skills/dice.tscn" id="16_3mfjx"]
+[ext_resource type="AudioStream" uid="uid://dx5fohj8216kp" path="res://assets/sound/プールでダイビング.mp3" id="19_0dcya"]
 [ext_resource type="Script" path="res://src/ProgressiveHeal.gd" id="21_x3a1i"]
+[ext_resource type="AudioStream" uid="uid://bq07r4a68he3x" path="res://assets/sound/嵐の海.mp3" id="22_j8rv7"]
 [ext_resource type="Texture2D" uid="uid://ehoyca7petcb" path="res://assets/Cube.png" id="32_1815s"]
 [ext_resource type="Texture2D" uid="uid://c0q3lmgi77qi6" path="res://assets/Buff_Health.png" id="32_fhqed"]
 [ext_resource type="Texture2D" uid="uid://bjgaiqxv2f0b5" path="res://assets/BuffUp.png" id="33_2k7fe"]
 [ext_resource type="Texture2D" uid="uid://cie5ksr2sya0f" path="res://assets/Buff_Enemy.png" id="34_8nrvw"]
 [ext_resource type="Texture2D" uid="uid://bll6855bdy356" path="res://assets/Buff_Attack.png" id="36_ninyg"]
 [ext_resource type="Script" path="res://src/EnemyBuff.gd" id="36_vfoui"]
+[ext_resource type="AudioStream" uid="uid://efbxwqkcmoib" path="res://assets/sound/dice_ready.wav" id="42_ot3mv"]
+[ext_resource type="AudioStream" uid="uid://2bhkgigj0rs4" path="res://assets/sound/hit.wav" id="43_cjl6i"]
+[ext_resource type="AudioStream" uid="uid://dijaa0s8kvokb" path="res://assets/sound/lose.wav" id="44_6qq5c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r28m1"]
 shader = ExtResource("4_lfcma")
@@ -170,9 +178,15 @@ defense_skill_slot = NodePath("CanvasLayer/Control2/MarginContainer/VBoxContaine
 [node name="DefenseTimer" type="Timer" parent="."]
 script = ExtResource("3_hvheh")
 
+[node name="AttackSound" type="AudioStreamPlayer" parent="DefenseTimer"]
+volume_db = -10.0
+
 [node name="AttackTimer" type="Timer" parent="."]
 wait_time = 0.5
 script = ExtResource("3_hvheh")
+
+[node name="AttackSound" type="AudioStreamPlayer" parent="AttackTimer"]
+volume_db = -10.0
 
 [node name="SpecialTimer" type="Timer" parent="."]
 script = ExtResource("3_hvheh")
@@ -184,6 +198,7 @@ script = ExtResource("2_dyrvv")
 rect = NodePath("ColorRect")
 icon = ExtResource("4_ib5uc")
 cooldown = 2.0
+sound = ExtResource("5_e8kua")
 
 [node name="ColorRect" type="ColorRect" parent="Skills/AmeTeleport"]
 material = SubResource("ShaderMaterial_r28m1")
@@ -206,12 +221,14 @@ attack_scene = ExtResource("8_7wopi")
 hitbox_resource = ExtResource("8_87hd8")
 icon = ExtResource("9_qoi0x")
 cooldown = 0.2
+sound = ExtResource("10_7iu87")
 
 [node name="CalliScythe" type="Node" parent="Skills"]
 script = ExtResource("6_5my0o")
 attack_scene = ExtResource("8_7wopi")
 hitbox_resource = ExtResource("10_6b7ml")
 icon = ExtResource("11_v71m3")
+sound = ExtResource("13_xpmo7")
 
 [node name="GuraDive" type="Node" parent="Skills"]
 script = ExtResource("10_vg1ia")
@@ -219,6 +236,7 @@ attack_scene = ExtResource("13_e854t")
 hitbox_resource = ExtResource("14_x42jw")
 icon = ExtResource("11_h7gbh")
 cooldown = 2.0
+sound = ExtResource("19_0dcya")
 
 [node name="InaTentacles" type="Node" parent="Skills"]
 script = ExtResource("6_5my0o")
@@ -227,6 +245,7 @@ hitbox_resource = ExtResource("15_ij3a3")
 to_hand = false
 icon = ExtResource("15_lff3y")
 cooldown = 3.0
+sound = ExtResource("22_j8rv7")
 
 [node name="ChaosRoll" type="Node" parent="Skills"]
 script = ExtResource("15_xxjbs")
@@ -239,15 +258,19 @@ script = ExtResource("21_x3a1i")
 player = NodePath("..")
 health = NodePath("../HurtBox/Health")
 
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "frame_freeze", "hit_flash", "collision")]
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("health", "hit_sound", "frame_freeze", "hit_flash", "collision")]
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("4_ath4u")
 health = NodePath("Health")
+hit_sound = NodePath("HitSound")
 frame_freeze = NodePath("FrameFreeze")
 hit_flash = NodePath("ShaderHitFlash")
 invincible_time = 0.5
 collision = NodePath("CollisionShape2D")
+
+[node name="HitSound" type="AudioStreamPlayer" parent="HurtBox"]
+stream = ExtResource("43_cjl6i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, -8)
@@ -659,5 +682,12 @@ horizontal_alignment = 1
 [node name="Restart" type="Button" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Try again"
+
+[node name="DiceReady" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("42_ot3mv")
+
+[node name="LoseSound" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("44_6qq5c")
 
 [connection signal="zero_health" from="HurtBox/Health" to="." method="_on_health_zero_health"]

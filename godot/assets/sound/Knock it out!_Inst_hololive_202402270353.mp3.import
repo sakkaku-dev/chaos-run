@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dqgcot7y1opqa"
+path="res://.godot/imported/Knock it out!_Inst_hololive_202402270353.mp3-e678f735d9fb32fd300c3f811ede01a8.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/Knock it out!_Inst_hololive_202402270353.mp3"
+dest_files=["res://.godot/imported/Knock it out!_Inst_hololive_202402270353.mp3-e678f735d9fb32fd300c3f811ede01a8.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

@@ -11,6 +11,7 @@ enum Type {
 
 @export var icon: Texture2D
 @export var cooldown := 1.0
+@export var sound: AudioStream
 
 func pressed(player: Player):
 	pass

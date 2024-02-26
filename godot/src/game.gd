@@ -7,8 +7,13 @@ extends Node2D
 @export var enemy_count_label: Label
 @export var enemy_killed_label: Label
 
+@export var min_bgm_volume = -30.0
+@export var max_bgm_volume = -20.0
+
 @onready var enemy_spawn_timer = $EnemySpawnTimer
 @onready var tile_map = $TileMap
+@onready var bgm = $BGM
+@onready var chaos_meter_loader = $TileMap/Bae/ChaosMeterLoader
 
 var enemy_count := 0
 var enemy_killed := 0
@@ -23,7 +28,7 @@ func _update_labels():
 
 func _spawn_enemy():
 	# prevent lagging
-	if enemy_count >= 200: return
+	if enemy_count >= 150: return
 	
 	var enemy = enemy_scene.instantiate()
 	tile_map.add_child(enemy)
@@ -44,3 +49,9 @@ func _spawn_enemy():
 	)
 	enemy_count += 1
 	_update_labels()
+
+#func _process(_delta):
+	#var enemies = chaos_meter_loader.get_overlapping_areas().size()
+	#var p = clamp(enemies / 40, 0.0, 1.0)
+	#var volume = min_bgm_volume + (max_bgm_volume - min_bgm_volume) * p
+	#bgm.volume_db = volume

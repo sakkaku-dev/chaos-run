@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bbyt3oe3mghyf"
+path="res://.godot/imported/Play Dice!_Inst_hololive_202402270353.mp3-164bca6f3060294e0fb51ecdee1cedef.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/Play Dice!_Inst_hololive_202402270353.mp3"
+dest_files=["res://.godot/imported/Play Dice!_Inst_hololive_202402270353.mp3-164bca6f3060294e0fb51ecdee1cedef.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

@@ -22,6 +22,9 @@ signal chaos_meter_changed(value, max_value)
 @onready var defense_timer = $DefenseTimer
 @onready var special_timer = $SpecialTimer
 
+@onready var attack_sound = $AttackTimer/AttackSound
+@onready var defense_sound = $DefenseTimer/AttackSound
+
 @onready var player_input = $PlayerInput
 @onready var animation_player = $AnimationPlayer
 @onready var body = $Body
@@ -29,12 +32,21 @@ signal chaos_meter_changed(value, max_value)
 
 @onready var collision_shape_2d = $HurtBox/CollisionShape2D
 
+@onready var dice_ready_sound = $DiceReady
+@onready var lose_sound = $LoseSound
+
 @onready var chaos_meter := 0.0:
 	set(v):
 		chaos_meter = clamp(v, 0, max_chaos_meter)
 		chaos_meter_changed.emit(v, max_chaos_meter)
 		chaos_meter_bar.value = v
 		chaos_meter_bar.max_value = max_chaos_meter
+		
+		if not dice_ready and chaos_meter >= max_chaos_meter:
+			dice_ready = true
+			dice_ready_sound.play()
+		elif dice_ready and chaos_meter < max_chaos_meter - 1:
+			dice_ready = false
 		
 		special_skill_slot.modulate = Color(.5, .5, .5, .8) if chaos_meter < max_chaos_meter else Color.WHITE
 		
@@ -47,6 +59,7 @@ signal chaos_meter_changed(value, max_value)
 	Skill.Type.INA_TENTACLES: $Skills/InaTentacles,
 }
 
+var dice_ready := false
 var attack_skill: Skill.Type
 var defense_skill: Skill.Type
 
@@ -72,6 +85,7 @@ func _ready():
 			elif ev.is_action_released("attack"):
 				attack_timer.run(skill_1.cooldown * chaos_cooldown_reduction)
 				skill_1.released(self)
+				attack_sound.play()
 		
 		if not defense_timer.should_wait():
 			var skill_2: Skill = skill_map[defense_skill]
@@ -80,6 +94,7 @@ func _ready():
 			elif ev.is_action_released("roll"):
 				defense_timer.run(skill_2.cooldown * chaos_cooldown_reduction)
 				skill_2.released(self)
+				defense_sound.play()
 				
 		if not special_timer.should_wait():
 			if ev.is_action_pressed("special_attack") and chaos_meter >= max_chaos_meter:
@@ -104,10 +119,12 @@ func _update_for_current_skills(init = false):
 	var attack = skill_map[attack_skill]
 	attack_timer.wait_time = attack.cooldown
 	attack_skill_slot.texture = attack.icon
+	attack_sound.stream = attack.sound
 	
 	var defense = skill_map[defense_skill]
 	defense_timer.wait_time = defense.cooldown
 	defense_skill_slot.texture = defense.icon
+	defense_sound.stream = defense.sound
 	
 	if init:
 		var special = chaos_roll
@@ -140,6 +157,7 @@ func _physics_process(delta):
 
 func _on_health_zero_health():
 	died.emit()
+	lose_sound.play()
 	gameover.show()
 
 func follow(node: Node2D):

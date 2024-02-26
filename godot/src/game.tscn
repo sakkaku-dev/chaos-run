@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://di8g8e6s34cik"]
+[gd_scene load_steps=17 format=3 uid="uid://di8g8e6s34cik"]
 
 [ext_resource type="Texture2D" uid="uid://bxyqf450fuup3" path="res://assets/0x72_DungeonTilesetII_v1.6.png" id="1_ehh2i"]
 [ext_resource type="Script" path="res://src/game.gd" id="1_j408l"]
@@ -11,6 +11,7 @@
 [ext_resource type="Theme" uid="uid://b7kuxx763de25" path="res://theme/theme.tres" id="8_5mca8"]
 [ext_resource type="PackedScene" uid="uid://dnuj650nq3u0n" path="res://src/skills/dice_attack.tscn" id="8_t2x8r"]
 [ext_resource type="Script" path="res://src/ChaosMeterLoader.gd" id="9_ra6eq"]
+[ext_resource type="AudioStream" uid="uid://dqgcot7y1opqa" path="res://assets/sound/Knock it out!_Inst_hololive_202402270353.mp3" id="12_qupnv"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_mc65i"]
 tile_data = PackedInt32Array(0, 1, 0, 1, 65537, 0, 2, 131073, 0, 3, 196609, 0)
@@ -703,7 +704,8 @@ zoom = Vector2(2.5, 2.5)
 [node name="EnemySpawnTimer" type="Timer" parent="."]
 autostart = true
 script = ExtResource("7_jguxi")
-min_time = 0.2
+max_time = 0.8
+increase_value = 0.98
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false
@@ -721,3 +723,8 @@ text = "Enemies"
 [node name="Killed" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Killed"
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_qupnv")
+volume_db = -25.0
+autoplay = true

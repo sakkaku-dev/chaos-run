@@ -19,13 +19,13 @@ func _ready():
 		hits_within_timeframe += 1
 	)
 	timer.timeout.connect(func():
-		add_to_chaos_meter += hits_within_timeframe * 1.5 * multipler_for_hits
+		add_to_chaos_meter += hits_within_timeframe * hits_within_timeframe * multipler_for_hits
 		hits_within_timeframe = 0
 	)
 
 func _process(_d):
 	var enemy_count = get_overlapping_areas().size()
-	player.chaos_meter -= chaos_reduce_amount / min(enemy_count, 50)
+	player.chaos_meter -= chaos_reduce_amount / clamp(enemy_count, 1, 50)
 	player.enemy_count = enemy_count
 	
 	#add_to_chaos_meter += enemy_count * multipler_for_enemies
