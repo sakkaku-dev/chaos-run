@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dnuj650nq3u0n"]
+[gd_scene load_steps=10 format=3 uid="uid://dnuj650nq3u0n"]
 
 [ext_resource type="Script" path="res://src/skills/dice_attack.gd" id="1_engoq"]
 [ext_resource type="Texture2D" uid="uid://cliykb4skn0ry" path="res://assets/Dice_Roll.png" id="1_pp5y8"]
 [ext_resource type="Script" path="res://src/old-system/rpg/HitBox.gd" id="2_mylph"]
+[ext_resource type="AudioStream" uid="uid://cli16xeyipn1v" path="res://assets/sound/打撃6.mp3" id="4_bw0vl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3pxqv"]
 atlas = ExtResource("1_pp5y8")
@@ -54,5 +55,9 @@ knockback_force = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("CircleShape2D_5cqnr")
+
+[node name="Impact" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_bw0vl")
+volume_db = -20.0
 
 [connection signal="hit" from="HitBox" to="." method="_on_hit_box_hit"]

@@ -170,7 +170,7 @@ shader_parameter/fill_ratio = 1.0
 [node name="Bae" type="CharacterBody2D" node_paths=PackedStringArray("gameover", "chaos_meter_bar", "special_skill_slot", "attack_skill_slot", "defense_skill_slot") groups=["player"]]
 script = ExtResource("1_uu8pv")
 gameover = NodePath("CanvasLayer/Gameover")
-chaos_meter_bar = NodePath("CanvasLayer/Control2/HBoxContainer/VBoxContainer/ProgressBar")
+chaos_meter_bar = NodePath("CanvasLayer/Control2/HBoxContainer/VBoxContainer/ColorRect/MarginContainer2/ProgressBar")
 special_skill_slot = NodePath("CanvasLayer/Control2/HBoxContainer/Special")
 attack_skill_slot = NodePath("CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Attack")
 defense_skill_slot = NodePath("CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer/Defense")
@@ -355,10 +355,26 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(80, 10)
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/ColorRect/MarginContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 1
 theme_override_styles/background = SubResource("StyleBoxFlat_ctury")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3y46c")
 step = 0.001
