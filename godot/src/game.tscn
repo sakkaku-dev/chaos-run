@@ -705,7 +705,7 @@ zoom = Vector2(2.5, 2.5)
 autostart = true
 script = ExtResource("7_jguxi")
 max_time = 0.8
-increase_value = 0.5
+increase_value = 0.98
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false
@@ -727,3 +727,4 @@ text = "Killed"
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_xhm30")
 volume_db = -25.0
+autoplay = true

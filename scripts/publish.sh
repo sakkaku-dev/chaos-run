@@ -5,7 +5,7 @@
 # butler: for itchio
 # steamcmd: for steam
 
-GAME="office-chaos"
+GAME="chaos-run"
 VERSION="$1"
 PLATFORM="$2"
 USER="$3"

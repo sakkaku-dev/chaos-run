@@ -403,13 +403,13 @@ player = NodePath("../../../../../../..")
 property = "chaos_meter"
 max_property = "max_chaos_meter"
 level_0_limit = 0.05
-level_0_text = "increase attack speed"
+level_0_text = "slightly increase attack speed"
 level_1_icon = NodePath("MarginContainer2/VBoxContainer/TextureRect")
 level_1_limit = 0.5
-level_1_text = "greatly increase attack speed"
+level_1_text = "increase attack speed"
 level_2_icon = NodePath("MarginContainer2/VBoxContainer/TextureRect2")
 level_2_limit = 0.8
-level_2_text = "immensely increase attack speed"
+level_2_text = "greatly increase attack speed"
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/AttackBuff"]
 layout_mode = 1
@@ -461,7 +461,7 @@ level_1_limit = 0.5
 level_1_text = "regenerate health"
 level_2_icon = NodePath("MarginContainer/VBoxContainer/TextureRect2")
 level_2_limit = 0.8
-level_2_text = "regenerate health fast"
+level_2_text = "quickly regenerate health"
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/HealthBuff"]
 layout_mode = 1
@@ -505,13 +505,13 @@ stretch_mode = 5
 script = ExtResource("36_vfoui")
 player = NodePath("../../../../../../..")
 property = "enemy_count"
-level_0_text = "decrease chaos meter reduction"
+level_0_text = "slightly decrease chaos meter reduction"
 level_1_icon = NodePath("MarginContainer2/VBoxContainer/TextureRect")
 level_1_limit = 20.0
-level_1_text = "greatly decrease chaos meter reduction"
+level_1_text = "decrease chaos meter reduction"
 level_2_icon = NodePath("MarginContainer2/VBoxContainer/TextureRect2")
 level_2_limit = 50.0
-level_2_text = "immensely decrease chaos meter reduction"
+level_2_text = "greatly decrease chaos meter reduction"
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control2/HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer/EnemyBuff"]
 layout_mode = 1
