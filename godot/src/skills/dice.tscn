@@ -73,7 +73,7 @@ script = ExtResource("1_m1x0t")
 [node name="Dice" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p6xx3")
 animation = &"roll"
-frame_progress = 0.714696
+frame_progress = 0.231808
 
 [node name="DiceNumber" type="Sprite2D" parent="."]
 texture = ExtResource("2_5dl0g")

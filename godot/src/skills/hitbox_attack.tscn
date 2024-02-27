@@ -67,4 +67,4 @@ shape = SubResource("RectangleShape2D_eafcc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
 sprite_frames = SubResource("SpriteFrames_1cmlp")
-frame_progress = 0.622229
+frame_progress = 0.427882
