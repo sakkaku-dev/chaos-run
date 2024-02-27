@@ -123,11 +123,13 @@ func _update_for_current_skills(init = false):
 	attack_timer.wait_time = attack.cooldown
 	attack_skill_slot.texture = attack.icon
 	attack_sound.stream = attack.sound
+	attack_timer.stop()
 	
 	var defense = skill_map[defense_skill]
 	defense_timer.wait_time = defense.cooldown
 	defense_skill_slot.texture = defense.icon
 	defense_sound.stream = defense.sound
+	defense_timer.stop()
 	
 	if init:
 		var special = chaos_roll
