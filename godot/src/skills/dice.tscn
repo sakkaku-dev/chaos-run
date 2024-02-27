@@ -1,31 +1,43 @@
-[gd_scene load_steps=10 format=3 uid="uid://ll72mt1gbjn4"]
+[gd_scene load_steps=13 format=3 uid="uid://ll72mt1gbjn4"]
 
 [ext_resource type="Script" path="res://src/skills/dice.gd" id="1_m1x0t"]
-[ext_resource type="Texture2D" uid="uid://ewmux4ami7nf" path="res://assets/Dice_Number.png" id="2_5dl0g"]
-[ext_resource type="Texture2D" uid="uid://cliykb4skn0ry" path="res://assets/Dice_Roll.png" id="2_uq6gh"]
+[ext_resource type="Texture2D" uid="uid://pm5x4fss2h2r" path="res://assets/Dice_Number.png" id="2_5dl0g"]
+[ext_resource type="Texture2D" uid="uid://2q8k40r5ov2p" path="res://assets/Dice_Roll.png" id="2_uq6gh"]
 [ext_resource type="AudioStream" uid="uid://dk0aiwwt0hvlu" path="res://assets/sound/dice-roll.mp3" id="4_l18b8"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pn0ow"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4a0v"]
 atlas = ExtResource("2_uq6gh")
-region = Rect2(0, 0, 29, 30)
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6bl2u"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vujgh"]
 atlas = ExtResource("2_uq6gh")
-region = Rect2(29, 0, 29, 30)
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ak2x1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ipag"]
 atlas = ExtResource("2_uq6gh")
-region = Rect2(58, 0, 29, 30)
+region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sbro1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmsu7"]
 atlas = ExtResource("2_uq6gh")
-region = Rect2(87, 0, 29, 30)
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6g25"]
+atlas = ExtResource("2_uq6gh")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6laj"]
+atlas = ExtResource("2_uq6gh")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wkuyd"]
+atlas = ExtResource("2_uq6gh")
+region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p6xx3"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pn0ow")
+"texture": SubResource("AtlasTexture_e4a0v")
 }],
 "loop": true,
 "name": &"default",
@@ -33,13 +45,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6bl2u")
+"texture": SubResource("AtlasTexture_vujgh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ak2x1")
+"texture": SubResource("AtlasTexture_5ipag")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sbro1")
+"texture": SubResource("AtlasTexture_xmsu7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6g25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6laj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wkuyd")
 }],
 "loop": true,
 "name": &"roll",
@@ -51,6 +72,8 @@ script = ExtResource("1_m1x0t")
 
 [node name="Dice" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p6xx3")
+animation = &"roll"
+frame_progress = 0.714696
 
 [node name="DiceNumber" type="Sprite2D" parent="."]
 texture = ExtResource("2_5dl0g")

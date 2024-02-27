@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deedm06plu7s6"
-path="res://.godot/imported/Icon_Ame.png-656452770e23c652719a82743ea66c49.ctex"
+uid="uid://wy8op16skisp"
+path="res://.godot/imported/Icon_Kiara.PNG-571c35d21049c353bf1df79397b99c8e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Icon_Ame.png"
-dest_files=["res://.godot/imported/Icon_Ame.png-656452770e23c652719a82743ea66c49.ctex"]
+source_file="res://assets/Icon_Kiara.PNG"
+dest_files=["res://.godot/imported/Icon_Kiara.PNG-571c35d21049c353bf1df79397b99c8e.ctex"]
 
 [params]
 

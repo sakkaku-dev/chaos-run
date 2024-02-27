@@ -6,9 +6,9 @@
 [ext_resource type="Script" path="res://src/skills/AmeTeleport.gd" id="2_dyrvv"]
 [ext_resource type="Script" path="res://src/old-system/rpg/rate_limiter.gd" id="3_hvheh"]
 [ext_resource type="Script" path="res://src/old-system/rpg/Hurtbox.gd" id="4_ath4u"]
-[ext_resource type="Texture2D" uid="uid://deedm06plu7s6" path="res://assets/Icon_Ame.png" id="4_ib5uc"]
 [ext_resource type="Shader" path="res://src/simple_circle.gdshader" id="4_lfcma"]
 [ext_resource type="Shader" path="res://src/old-system/shaders/hit.gdshader" id="4_p3cl5"]
+[ext_resource type="Texture2D" uid="uid://dvs1i658juebp" path="res://assets/Icon_Ame.PNG" id="4_wiw8t"]
 [ext_resource type="AudioStream" uid="uid://k65kqc85my2c" path="res://assets/sound/tp.wav" id="5_e8kua"]
 [ext_resource type="Script" path="res://src/skills/SimpleHitAttack.gd" id="6_5my0o"]
 [ext_resource type="Script" path="res://src/old-system/rpg/health.gd" id="7_0gixn"]
@@ -22,22 +22,22 @@
 [ext_resource type="Script" path="res://src/old-system/FrameFreeze.gd" id="8_s1lnb"]
 [ext_resource type="Script" path="res://src/ShaderHitFlash.gd" id="9_bqdnm"]
 [ext_resource type="Script" path="res://src/CircleTimer.gd" id="9_c31dr"]
-[ext_resource type="Texture2D" uid="uid://b7fsp77cpvup8" path="res://assets/Cursor.png" id="9_owcvy"]
-[ext_resource type="Texture2D" uid="uid://ufeoj0yljqyi" path="res://assets/Icon_Kiara.png" id="9_qoi0x"]
+[ext_resource type="Texture2D" uid="uid://c233ut4rojbe" path="res://assets/Cursor.png" id="9_owcvy"]
 [ext_resource type="Resource" uid="uid://dh40s7ltwnlif" path="res://src/skills/resource/CalliScythe.tres" id="10_6b7ml"]
 [ext_resource type="AudioStream" uid="uid://dxpyrplfh1kd3" path="res://assets/sound/剣の素振り3.mp3" id="10_7iu87"]
+[ext_resource type="Texture2D" uid="uid://wy8op16skisp" path="res://assets/Icon_Kiara.PNG" id="10_qt34c"]
 [ext_resource type="Script" path="res://src/skills/GuraDive.gd" id="10_vg1ia"]
-[ext_resource type="Texture2D" uid="uid://wefkuh407ntl" path="res://assets/Icon_Gura.png" id="11_h7gbh"]
-[ext_resource type="Texture2D" uid="uid://dvmkbjmibmhyf" path="res://assets/Icon_Calli.jpg" id="11_v71m3"]
 [ext_resource type="Script" path="res://src/Gameover.gd" id="12_fcj8v"]
+[ext_resource type="Texture2D" uid="uid://dfr788holrg6h" path="res://assets/Icon_Calli.PNG" id="13_56uv7"]
 [ext_resource type="PackedScene" uid="uid://c77wbnvg056ri" path="res://src/skills/gura_dive.tscn" id="13_e854t"]
 [ext_resource type="AudioStream" uid="uid://c8464fj52sokv" path="res://assets/sound/剣の素振り1.mp3" id="13_xpmo7"]
 [ext_resource type="Resource" uid="uid://c5fnofv65s5u6" path="res://src/skills/resource/GuraDive.tres" id="14_x42jw"]
 [ext_resource type="Resource" uid="uid://lyxod4y62k4h" path="res://src/skills/resource/InaTentacles.tres" id="15_ij3a3"]
-[ext_resource type="Texture2D" uid="uid://bkivylqrr6n53" path="res://assets/Icon_Ina.png" id="15_lff3y"]
 [ext_resource type="Script" path="res://src/skills/ChaosRoll.gd" id="15_xxjbs"]
 [ext_resource type="PackedScene" uid="uid://ll72mt1gbjn4" path="res://src/skills/dice.tscn" id="16_3mfjx"]
+[ext_resource type="Texture2D" uid="uid://77njmpibx1da" path="res://assets/Icon_Gura.PNG" id="18_swx7l"]
 [ext_resource type="AudioStream" uid="uid://dx5fohj8216kp" path="res://assets/sound/プールでダイビング.mp3" id="19_0dcya"]
+[ext_resource type="Texture2D" uid="uid://blyxbgmc56qx6" path="res://assets/Icon_Ina.PNG" id="21_4bj41"]
 [ext_resource type="Script" path="res://src/ProgressiveHeal.gd" id="21_x3a1i"]
 [ext_resource type="AudioStream" uid="uid://bq07r4a68he3x" path="res://assets/sound/嵐の海.mp3" id="22_j8rv7"]
 [ext_resource type="Texture2D" uid="uid://ehoyca7petcb" path="res://assets/Cube.png" id="32_1815s"]
@@ -55,7 +55,12 @@ shader = ExtResource("4_lfcma")
 shader_parameter/radius = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vmewj"]
-size = Vector2(12, 16)
+size = Vector2(20, 28)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ctc5y"]
+shader = ExtResource("4_p3cl5")
+shader_parameter/enable = false
+shader_parameter/hit_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_12nwv"]
 bg_color = Color(0.541176, 0.117647, 0.117647, 1)
@@ -63,13 +68,8 @@ bg_color = Color(0.541176, 0.117647, 0.117647, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qbgh"]
 bg_color = Color(0.219608, 0.788235, 0.117647, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ctc5y"]
-shader = ExtResource("4_p3cl5")
-shader_parameter/enable = false
-shader_parameter/hit_color = Color(1, 1, 1, 1)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_280xg"]
-size = Vector2(14, 4)
+size = Vector2(18, 6)
 
 [sub_resource type="Animation" id="Animation_yov1s"]
 length = 0.001
@@ -112,7 +112,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_ddhmo"]
 resource_name = "idle"
-length = 0.4
+length = 0.2
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -121,10 +121,10 @@ tracks/0/path = NodePath("Body:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1]
+"values": [7]
 }
 
 [sub_resource type="Animation" id="Animation_hnuck"]
@@ -138,10 +138,10 @@ tracks/0/path = NodePath("Body:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [2, 3, 4, 5]
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y87iq"]
@@ -195,8 +195,9 @@ script = ExtResource("3_hvheh")
 
 [node name="AmeTeleport" type="Node" parent="Skills" node_paths=PackedStringArray("rect")]
 script = ExtResource("2_dyrvv")
+teleport_distance = 150
 rect = NodePath("ColorRect")
-icon = ExtResource("4_ib5uc")
+icon = ExtResource("4_wiw8t")
 cooldown = 2.0
 sound = ExtResource("5_e8kua")
 
@@ -219,22 +220,22 @@ color = Color(0.380392, 0.588235, 1, 0.403922)
 script = ExtResource("6_5my0o")
 attack_scene = ExtResource("8_7wopi")
 hitbox_resource = ExtResource("8_87hd8")
-icon = ExtResource("9_qoi0x")
-cooldown = 0.2
+icon = ExtResource("10_qt34c")
+cooldown = 0.5
 sound = ExtResource("10_7iu87")
 
 [node name="CalliScythe" type="Node" parent="Skills"]
 script = ExtResource("6_5my0o")
 attack_scene = ExtResource("8_7wopi")
 hitbox_resource = ExtResource("10_6b7ml")
-icon = ExtResource("11_v71m3")
+icon = ExtResource("13_56uv7")
 sound = ExtResource("13_xpmo7")
 
 [node name="GuraDive" type="Node" parent="Skills"]
 script = ExtResource("10_vg1ia")
 attack_scene = ExtResource("13_e854t")
 hitbox_resource = ExtResource("14_x42jw")
-icon = ExtResource("11_h7gbh")
+icon = ExtResource("18_swx7l")
 cooldown = 2.0
 sound = ExtResource("19_0dcya")
 
@@ -243,7 +244,7 @@ script = ExtResource("6_5my0o")
 attack_scene = ExtResource("8_7wopi")
 hitbox_resource = ExtResource("15_ij3a3")
 to_hand = false
-icon = ExtResource("15_lff3y")
+icon = ExtResource("21_4bj41")
 cooldown = 3.0
 sound = ExtResource("22_j8rv7")
 
@@ -275,7 +276,7 @@ collision = NodePath("CollisionShape2D")
 stream = ExtResource("43_cjl6i")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, -8)
+position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_vmewj")
 
 [node name="Health" type="Node" parent="HurtBox"]
@@ -293,18 +294,29 @@ node = NodePath("../../Body")
 position = Vector2(0, -7)
 
 [node name="Sprite2D" type="Sprite2D" parent="HandRoot"]
-position = Vector2(16, 0)
+position = Vector2(23, -2.4869e-14)
+rotation = 1.5708
+scale = Vector2(0.1, 0.1)
 texture = ExtResource("9_owcvy")
+
+[node name="Body" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ctc5y")
+position = Vector2(0, -9)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_pkb8e")
+offset = Vector2(0, -23.255)
+flip_h = true
+hframes = 8
 
 [node name="HpBar" type="ProgressBar" parent="." node_paths=PackedStringArray("health")]
 custom_minimum_size = Vector2(15, 2)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -7.0
-offset_top = -24.0
-offset_right = 8.0
-offset_bottom = -22.0
+offset_left = -15.0
+offset_top = -46.0
+offset_right = 16.0
+offset_bottom = -42.0
 grow_horizontal = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_12nwv")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3qbgh")
@@ -313,16 +325,11 @@ show_percentage = false
 script = ExtResource("7_abq4l")
 health = NodePath("../HurtBox/Health")
 
-[node name="Body" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_ctc5y")
-position = Vector2(0, -9)
-texture = ExtResource("1_pkb8e")
-hframes = 8
-
 [node name="PlayerInput" type="Node" parent="."]
 script = ExtResource("1_k4f7f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_280xg")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

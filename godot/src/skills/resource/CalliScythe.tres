@@ -1,27 +1,83 @@
-[gd_resource type="Resource" script_class="HitBoxAttackResource" load_steps=5 format=3 uid="uid://dh40s7ltwnlif"]
+[gd_resource type="Resource" script_class="HitBoxAttackResource" load_steps=13 format=3 uid="uid://dh40s7ltwnlif"]
 
 [ext_resource type="Script" path="res://src/skills/HitBoxAttackResource.gd" id="1_7layt"]
-[ext_resource type="Texture2D" uid="uid://dqwgm6etnbmgr" path="res://assets/LongRangeAttack.png" id="1_8lyxf"]
+[ext_resource type="Texture2D" uid="uid://w2f7veturwpn" path="res://assets/LongRangeAttack.png" id="1_8lyxf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_enkub"]
+atlas = ExtResource("1_8lyxf")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20o27"]
+atlas = ExtResource("1_8lyxf")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0o68"]
+atlas = ExtResource("1_8lyxf")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yogj2"]
+atlas = ExtResource("1_8lyxf")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgbno"]
+atlas = ExtResource("1_8lyxf")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c64rq"]
+atlas = ExtResource("1_8lyxf")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvasi"]
+atlas = ExtResource("1_8lyxf")
+region = Rect2(576, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gjiw"]
+atlas = ExtResource("1_8lyxf")
+region = Rect2(672, 0, 96, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hm0sc"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_8lyxf")
+"texture": SubResource("AtlasTexture_enkub")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20o27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0o68")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yogj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgbno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c64rq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qvasi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gjiw")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 16.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f76ra"]
-size = Vector2(40, 80)
+size = Vector2(90, 110)
 
 [resource]
 script = ExtResource("1_7layt")
 damage = 4
-attack_time = 0.1
-knockback = 100
+attack_time = 0.3
+knockback = 180
 attack_shape = SubResource("RectangleShape2D_f76ra")
-offset = Vector2(35, 0)
+hit_delay = 0.15
+offset = Vector2(60, 0)
 animation = SubResource("SpriteFrames_hm0sc")
+animation_rotation = 0
+animation_offset = Vector2(0, 0)

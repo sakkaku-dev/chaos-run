@@ -2,7 +2,7 @@ extends Node2D
 
 @export var player: CharacterBody2D
 @export var enemy_scene: PackedScene
-@export var distance_to_player := 200
+@export var distance_to_player := 300
 
 @export var enemy_count_label: Label
 @export var enemy_killed_label: Label
@@ -19,6 +19,7 @@ var enemy_count := 0
 var enemy_killed := 0
 
 func _ready():
+	randomize()
 	enemy_spawn_timer.timeout.connect(func(): _spawn_enemy())
 	_update_labels()
 

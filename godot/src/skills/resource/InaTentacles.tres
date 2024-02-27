@@ -15,13 +15,16 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7ddni"]
-radius = 80.0
+radius = 100.0
 
 [resource]
 script = ExtResource("2_hfevr")
 damage = 2
 attack_time = 0.3
-knockback = 200
+knockback = 250
 attack_shape = SubResource("CircleShape2D_7ddni")
+hit_delay = 0.0
 offset = Vector2(0, 0)
 animation = SubResource("SpriteFrames_6fg4x")
+animation_rotation = 0
+animation_offset = Vector2(0, 0)

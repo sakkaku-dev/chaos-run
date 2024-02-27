@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 signal died()
 
-@export var speed := 50
-@export var accel := 500
+@export var speed := 80
+@export var accel := 600
 
 @onready var player := get_tree().get_first_node_in_group("player")
 @onready var soft_collision = $SoftCollision

@@ -5,8 +5,8 @@ signal died()
 signal chaos_meter_changed(value, max_value)
 
 @export var accel := 800
-@export var speed := 100
-@export var roll_speed := 300
+@export var speed := 150
+@export var roll_speed := 500
 
 @export var max_chaos_meter := 100.0
 @export var max_cooldown_decrease := 0.5
@@ -58,6 +58,8 @@ signal chaos_meter_changed(value, max_value)
 	Skill.Type.GURA_SHARK_DIVE: $Skills/GuraDive,
 	Skill.Type.INA_TENTACLES: $Skills/InaTentacles,
 }
+
+@onready var original_scale := scale.x
 
 var dice_ready := false
 var attack_skill: Skill.Type
@@ -152,7 +154,7 @@ func _physics_process(delta):
 	else:
 		var motion = get_motion()
 		var aim_dir = global_position.direction_to(get_global_mouse_position())
-		body.scale.x = -1 if aim_dir.x < 0 else 1
+		body.scale.x = -0.4 if aim_dir.x < 0 else 0.4
 		hand_root.global_rotation = Vector2.RIGHT.angle_to(aim_dir)
 		
 		animation_player.play("idle" if motion.length() == 0 else "move")

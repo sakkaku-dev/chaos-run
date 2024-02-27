@@ -1,9 +1,60 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqimjkhl2w5rr"]
+[gd_scene load_steps=11 format=3 uid="uid://cqimjkhl2w5rr"]
 
 [ext_resource type="Script" path="res://src/old-system/rpg/OneshotHit.gd" id="1_u5rew"]
+[ext_resource type="Texture2D" uid="uid://dg1qc1scwwgws" path="res://assets/ShortAttack.png" id="2_jmvp5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eafcc"]
 size = Vector2(10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qr1il"]
+atlas = ExtResource("2_jmvp5")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yhf1v"]
+atlas = ExtResource("2_jmvp5")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8qok"]
+atlas = ExtResource("2_jmvp5")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wmysc"]
+atlas = ExtResource("2_jmvp5")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emy74"]
+atlas = ExtResource("2_jmvp5")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_06k46"]
+atlas = ExtResource("2_jmvp5")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1cmlp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qr1il")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yhf1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8qok")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wmysc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emy74")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_06k46")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
 
 [node name="HitBox" type="Area2D"]
 collision_layer = 0
@@ -15,3 +66,5 @@ knockback_force = 100
 shape = SubResource("RectangleShape2D_eafcc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D"]
+sprite_frames = SubResource("SpriteFrames_1cmlp")
+frame_progress = 0.622229

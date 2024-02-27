@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wefkuh407ntl"
-path="res://.godot/imported/Icon_Gura.png-59705556052ade79494e8ef2840939b3.ctex"
+uid="uid://dfr788holrg6h"
+path="res://.godot/imported/Icon_Calli.PNG-0f7e9caba71bd3bc73141e50f416afa3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Icon_Gura.png"
-dest_files=["res://.godot/imported/Icon_Gura.png-59705556052ade79494e8ef2840939b3.ctex"]
+source_file="res://assets/Icon_Calli.PNG"
+dest_files=["res://.godot/imported/Icon_Calli.PNG-0f7e9caba71bd3bc73141e50f416afa3.ctex"]
 
 [params]
 

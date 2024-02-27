@@ -11,5 +11,5 @@ func released(p: Player):
 	else:
 		p.add_child(attack)
 		
-	attack.apply(hitbox_resource)
+	await attack.apply(hitbox_resource)
 	attack.attack()

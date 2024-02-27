@@ -1,33 +1,54 @@
-[gd_scene load_steps=10 format=3 uid="uid://dnuj650nq3u0n"]
+[gd_scene load_steps=13 format=3 uid="uid://dnuj650nq3u0n"]
 
 [ext_resource type="Script" path="res://src/skills/dice_attack.gd" id="1_engoq"]
-[ext_resource type="Texture2D" uid="uid://cliykb4skn0ry" path="res://assets/Dice_Roll.png" id="1_pp5y8"]
+[ext_resource type="Texture2D" uid="uid://2q8k40r5ov2p" path="res://assets/Dice_Roll.png" id="1_pp5y8"]
 [ext_resource type="Script" path="res://src/old-system/rpg/HitBox.gd" id="2_mylph"]
 [ext_resource type="AudioStream" uid="uid://cli16xeyipn1v" path="res://assets/sound/打撃6.mp3" id="4_bw0vl"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3pxqv"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6njsi"]
 atlas = ExtResource("1_pp5y8")
-region = Rect2(29, 0, 29, 30)
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mdmc7"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ang13"]
 atlas = ExtResource("1_pp5y8")
-region = Rect2(58, 0, 29, 30)
+region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r87wq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_26sgj"]
 atlas = ExtResource("1_pp5y8")
-region = Rect2(87, 0, 29, 30)
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ggssh"]
+atlas = ExtResource("1_pp5y8")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fm3us"]
+atlas = ExtResource("1_pp5y8")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mpj6"]
+atlas = ExtResource("1_pp5y8")
+region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rgp1j"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_3pxqv")
+"texture": SubResource("AtlasTexture_6njsi")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mdmc7")
+"texture": SubResource("AtlasTexture_ang13")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r87wq")
+"texture": SubResource("AtlasTexture_26sgj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ggssh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fm3us")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0mpj6")
 }],
 "loop": true,
 "name": &"default",
@@ -44,7 +65,7 @@ script = ExtResource("1_engoq")
 process_mode = 3
 sprite_frames = SubResource("SpriteFrames_rgp1j")
 autoplay = "default"
-frame_progress = 0.0394207
+frame_progress = 0.148581
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 0

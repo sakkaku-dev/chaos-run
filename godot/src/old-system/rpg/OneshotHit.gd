@@ -16,6 +16,11 @@ func _ready():
 func apply(res: HitBoxAttackResource):
 	animated_sprite_2d.sprite_frames = res.animation
 	animated_sprite_2d.play("default")
+	animated_sprite_2d.rotation_degrees = res.animation_rotation
+	animated_sprite_2d.offset = res.animation_offset
 	
 	update_hit_resource(res)
 	collision_shape_2d.position = original_pos + res.offset
+	collision_shape_2d.disabled = true
+
+	await get_tree().create_timer(res.hit_delay).timeout

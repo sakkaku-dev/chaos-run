@@ -94,7 +94,7 @@ func _cut_grid_tiles(source_grid: Vector2i, target_grid: Vector2i):
 			var source_id = get_cell_source_id(layer, source_cell)
 			var atlas = get_cell_atlas_coords(layer, source_cell)
 			set_cell(layer, target_cell, source_id, atlas)
-			erase_cell(layer, source_cell)
+			#erase_cell(layer, source_cell)
 
 
 func _grid_to_tile(grid_pos: Vector2i):

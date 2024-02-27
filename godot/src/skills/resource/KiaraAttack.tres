@@ -1,27 +1,69 @@
-[gd_resource type="Resource" script_class="HitBoxAttackResource" load_steps=5 format=3 uid="uid://7bsncgkxat66"]
+[gd_resource type="Resource" script_class="HitBoxAttackResource" load_steps=11 format=3 uid="uid://7bsncgkxat66"]
 
 [ext_resource type="Script" path="res://src/skills/HitBoxAttackResource.gd" id="1_n5btq"]
-[ext_resource type="Texture2D" uid="uid://bnk1ox3offltm" path="res://assets/ShortAttack.png" id="1_p88a7"]
+[ext_resource type="Texture2D" uid="uid://dg1qc1scwwgws" path="res://assets/ShortAttack.png" id="1_p88a7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s1ccw"]
+atlas = ExtResource("1_p88a7")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knl7t"]
+atlas = ExtResource("1_p88a7")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwemw"]
+atlas = ExtResource("1_p88a7")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rdxjt"]
+atlas = ExtResource("1_p88a7")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kaur"]
+atlas = ExtResource("1_p88a7")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wef1"]
+atlas = ExtResource("1_p88a7")
+region = Rect2(320, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1raas"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_p88a7")
+"texture": SubResource("AtlasTexture_s1ccw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_knl7t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwemw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rdxjt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kaur")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wef1")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 16.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1pd06"]
-size = Vector2(15, 30)
+size = Vector2(50, 30)
 
 [resource]
 script = ExtResource("1_n5btq")
 damage = 2
-attack_time = 0.1
-knockback = 80
+attack_time = 0.3
+knockback = 120
 attack_shape = SubResource("RectangleShape2D_1pd06")
-offset = Vector2(15, 0)
+hit_delay = 0.1
+offset = Vector2(30, 0)
 animation = SubResource("SpriteFrames_1raas")
+animation_rotation = 90
+animation_offset = Vector2(0, -5)

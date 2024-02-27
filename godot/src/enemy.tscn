@@ -56,10 +56,10 @@ shader_parameter/enable = false
 shader_parameter/hit_color = Color(1, 0, 0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bsobc"]
-radius = 7.0
+radius = 14.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0y67c"]
-radius = 11.0
+radius = 23.0217
 
 [node name="Enemy" type="CharacterBody2D" groups=["enemy"]]
 script = ExtResource("1_m1poa")
@@ -104,7 +104,7 @@ damage = 20
 knockback_force = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(0, -6)
+position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_bsobc")
 
 [node name="SoftCollision" type="Area2D" parent="."]
