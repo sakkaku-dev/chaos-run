@@ -6,9 +6,9 @@ on:
       version:
         description: 'Game Version'
         required: true
-  push:
-    tags:
-      - "v*.*.*"
+  # push:
+  #   tags:
+  #     - "v*.*.*"
 
 jobs:
   release:

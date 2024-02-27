@@ -79,7 +79,7 @@ func _ready():
 		var chaos_percentage = (chaos_meter / max_chaos_meter)
 		var chaos_cooldown_reduction = 1.0 - (chaos_percentage * (1.0 - max_cooldown_decrease))
 
-		if not attack_timer.should_wait():
+		if not attack_timer.should_wait() and not follow_node:
 			var skill_1: Skill = skill_map[attack_skill]
 			if ev.is_action_pressed("attack"):
 				skill_1.pressed(self)
@@ -88,7 +88,7 @@ func _ready():
 				skill_1.released(self)
 				attack_sound.play()
 		
-		if not defense_timer.should_wait():
+		if not defense_timer.should_wait() and not follow_node:
 			var skill_2: Skill = skill_map[defense_skill]
 			if ev.is_action_pressed("roll"):
 				skill_2.pressed(self)
