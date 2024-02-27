@@ -119,6 +119,15 @@ func _roll_random_skills():
 	
 	available.erase(attack_skill)
 	defense_skill = available.pick_random()
+	
+	_flash_skill(attack_skill_slot)
+	_flash_skill(defense_skill_slot)
+
+func _flash_skill(skill: Control, duration := 0.2):
+	var mat = skill.material as ShaderMaterial
+	mat.set_shader_parameter("enable", true)
+	await get_tree().create_timer(duration).timeout
+	mat.set_shader_parameter("enable", false)
 
 func _update_for_current_skills(init = false):
 	var attack = skill_map[attack_skill]

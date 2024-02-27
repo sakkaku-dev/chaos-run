@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=76 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -51,6 +51,7 @@
 [ext_resource type="Texture2D" uid="uid://2q8k40r5ov2p" path="res://assets/Dice_Roll.png" id="46_4c2ta"]
 [ext_resource type="AudioStream" uid="uid://dk0aiwwt0hvlu" path="res://assets/sound/dice-roll.mp3" id="47_36auy"]
 [ext_resource type="Texture2D" uid="uid://pm5x4fss2h2r" path="res://assets/Dice_Number.png" id="47_61jgs"]
+[ext_resource type="Shader" path="res://src/flash.gdshader" id="48_42war"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r28m1"]
 shader = ExtResource("4_lfcma")
@@ -230,6 +231,14 @@ shader_parameter/inner_radius = 0.498
 shader_parameter/turn = 0.0
 shader_parameter/blur = 0.0
 shader_parameter/fill_ratio = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g8ep8"]
+shader = ExtResource("48_42war")
+shader_parameter/enable = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wuu1a"]
+shader = ExtResource("48_42war")
+shader_parameter/enable = false
 
 [node name="Bae" type="CharacterBody2D" node_paths=PackedStringArray("gameover", "chaos_meter_bar", "special_skill_slot", "attack_skill_slot", "defense_skill_slot") groups=["player"]]
 script = ExtResource("1_uu8pv")
@@ -708,6 +717,7 @@ layout_mode = 2
 theme_override_constants/separation = 15
 
 [node name="Attack" type="TextureRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_g8ep8")
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("7_fdl4x")
@@ -740,6 +750,7 @@ vframes = 24
 frame = 77
 
 [node name="Defense" type="TextureRect" parent="CanvasLayer/Control2/MarginContainer/VBoxContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_wuu1a")
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("7_fdl4x")
