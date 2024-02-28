@@ -1,10 +1,10 @@
 [gd_scene load_steps=16 format=3 uid="uid://i56s2i06l4i8"]
 
 [ext_resource type="Script" path="res://src/enemy.gd" id="1_m1poa"]
-[ext_resource type="Texture2D" uid="uid://dsywc47xdhg0q" path="res://assets/skeleton_v2.png" id="1_p2jjj"]
 [ext_resource type="Shader" path="res://src/old-system/shaders/hit.gdshader" id="2_gue4p"]
 [ext_resource type="Script" path="res://src/old-system/rpg/Hurtbox.gd" id="3_gedyw"]
 [ext_resource type="Script" path="res://src/old-system/rpg/health.gd" id="4_2pvf1"]
+[ext_resource type="Texture2D" uid="uid://couvtd7d4ge2p" path="res://assets/Boros .png" id="6_8hly1"]
 [ext_resource type="Script" path="res://src/ShaderHitFlash.gd" id="6_bpdvi"]
 [ext_resource type="Script" path="res://src/old-system/rpg/HitBox.gd" id="7_qlb3i"]
 [ext_resource type="Script" path="res://src/SoftCollision.gd" id="8_0e65w"]
@@ -38,7 +38,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [2, 3, 4, 5]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jjwmx"]
@@ -70,6 +70,7 @@ script = ExtResource("1_m1poa")
 libraries = {
 "": SubResource("AnimationLibrary_jjwmx")
 }
+autoplay = "move"
 
 [node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("health", "hit_flash")]
 collision_layer = 16
@@ -93,8 +94,8 @@ node = NodePath("../../Sprite2D")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_qebrr")
 position = Vector2(0, -6)
-texture = ExtResource("1_p2jjj")
-hframes = 4
+texture = ExtResource("6_8hly1")
+hframes = 6
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 0

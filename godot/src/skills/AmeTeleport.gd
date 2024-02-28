@@ -2,6 +2,8 @@ extends DirectionalSkill
 
 @export var teleport_distance := 100
 @export var rect: ColorRect
+@export var teleport_effect: PackedScene
+@export var player_effect: TeleportEffect
 
 var is_pressed = false
 var player: Player
@@ -14,6 +16,11 @@ func pressed(p: Player):
 	player = p
 
 func released(player: Player):
+	var eff = teleport_effect.instantiate()
+	get_tree().current_scene.add_child(eff)
+	eff.global_position = player.global_position
+	
+	player_effect.start()
 	player.global_position += get_dir(player) * teleport_distance
 	is_pressed = false
 	player.invincible()

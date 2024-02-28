@@ -3,6 +3,7 @@ extends TileMap
 
 @export var layer := 0
 @export var center_node: Node2D
+@export var source_id := 3
 
 var grid_dividor := 3
 var tile_size_on_grid: Vector2i
@@ -17,6 +18,12 @@ var grid_pos
 var grid_dir
 
 func _ready():
+	clear()
+	for x in range(4):
+		for y in range(4):
+			print(x, "-", y)
+			set_cell(layer, Vector2i(x, y), source_id, Vector2i.ZERO)
+	
 	var rect = get_used_rect()
 	
 	tile_size_on_grid = rect.size / grid_dividor
@@ -91,9 +98,9 @@ func _cut_grid_tiles(source_grid: Vector2i, target_grid: Vector2i):
 
 			# Currently there can be a bug when copying the cells from the source
 			# For now used fixed atlas coordinate
-			var source_id = get_cell_source_id(layer, source_cell)
-			var atlas = get_cell_atlas_coords(layer, source_cell)
-			set_cell(layer, target_cell, source_id, atlas)
+			#var source_id = get_cell_source_id(layer, source_cell)
+			#var atlas = get_cell_atlas_coords(layer, source_cell)
+			set_cell(layer, target_cell, source_id, Vector2.ZERO)
 			#erase_cell(layer, source_cell)
 
 

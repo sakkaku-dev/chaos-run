@@ -160,6 +160,7 @@ func get_motion():
 func _physics_process(delta):
 	if follow_node:
 		global_position = follow_node.global_position
+		animation_player.play("move")
 	else:
 		var motion = get_motion()
 		var aim_dir = global_position.direction_to(get_global_mouse_position())

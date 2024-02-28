@@ -1,6 +1,6 @@
 extends Control
 
-@export var restart: Button
+@export var restart: BaseButton
 
 func _ready():
 	restart.pressed.connect(func():

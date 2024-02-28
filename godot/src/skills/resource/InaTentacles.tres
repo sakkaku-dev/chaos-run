@@ -1,21 +1,74 @@
-[gd_resource type="Resource" script_class="HitBoxAttackResource" load_steps=5 format=3 uid="uid://lyxod4y62k4h"]
+[gd_resource type="Resource" script_class="HitBoxAttackResource" load_steps=13 format=3 uid="uid://lyxod4y62k4h"]
 
-[ext_resource type="Texture2D" uid="uid://dtlecoep3f6pa" path="res://assets/Tentacles.png" id="1_ot8wo"]
+[ext_resource type="Texture2D" uid="uid://b27rh6pm2jteh" path="res://assets/Tentacle_Attack.png" id="1_c53pr"]
 [ext_resource type="Script" path="res://src/skills/HitBoxAttackResource.gd" id="2_hfevr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wboym"]
+atlas = ExtResource("1_c53pr")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8cl4"]
+atlas = ExtResource("1_c53pr")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwhhk"]
+atlas = ExtResource("1_c53pr")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ei8wt"]
+atlas = ExtResource("1_c53pr")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfrno"]
+atlas = ExtResource("1_c53pr")
+region = Rect2(1024, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iq8gd"]
+atlas = ExtResource("1_c53pr")
+region = Rect2(1280, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtwqi"]
+atlas = ExtResource("1_c53pr")
+region = Rect2(1536, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eit8u"]
+atlas = ExtResource("1_c53pr")
+region = Rect2(1792, 0, 256, 256)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6fg4x"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_ot8wo")
+"texture": SubResource("AtlasTexture_wboym")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8cl4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwhhk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ei8wt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfrno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iq8gd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtwqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eit8u")
 }],
 "loop": false,
 "name": &"default",
-"speed": 5.0
+"speed": 12.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7ddni"]
-radius = 100.0
+radius = 140.0
 
 [resource]
 script = ExtResource("2_hfevr")

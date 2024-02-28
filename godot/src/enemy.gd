@@ -7,11 +7,14 @@ signal died()
 
 @onready var player := get_tree().get_first_node_in_group("player")
 @onready var soft_collision = $SoftCollision
+@onready var sprite_2d = $Sprite2D
 
 func _physics_process(delta):
 	var dir = global_position.direction_to(player.global_position)
 	velocity = velocity.move_toward(dir * speed, accel * delta)
 	velocity += soft_collision.get_push_vector() * delta
+	
+	sprite_2d.scale.x = -1 if velocity.x > 0 else 1
 	
 	move_and_slide()
 

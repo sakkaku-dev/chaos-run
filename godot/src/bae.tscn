@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://rdrfy4i51cl8"]
+[gd_scene load_steps=80 format=3 uid="uid://rdrfy4i51cl8"]
 
 [ext_resource type="Script" path="res://src/input/PlayerInput.gd" id="1_k4f7f"]
 [ext_resource type="Texture2D" uid="uid://dm01pesa8q3we" path="res://assets/Baelz.png" id="1_pkb8e"]
@@ -52,6 +52,10 @@
 [ext_resource type="AudioStream" uid="uid://dk0aiwwt0hvlu" path="res://assets/sound/dice-roll.mp3" id="47_36auy"]
 [ext_resource type="Texture2D" uid="uid://pm5x4fss2h2r" path="res://assets/Dice_Number.png" id="47_61jgs"]
 [ext_resource type="Shader" path="res://src/flash.gdshader" id="48_42war"]
+[ext_resource type="Texture2D" uid="uid://bwpugajtg1fwb" path="res://assets/Button.png" id="52_ropg4"]
+[ext_resource type="PackedScene" uid="uid://5gqjpwqs3eo0" path="res://src/teleport_effect.tscn" id="53_6762e"]
+[ext_resource type="Texture2D" uid="uid://c2x06ak3kj4p5" path="res://assets/ButtonPressed .png" id="53_uwqvr"]
+[ext_resource type="Texture2D" uid="uid://ms8rb6yva1w3" path="res://assets/ButtonHovered .png" id="54_rm76k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r28m1"]
 shader = ExtResource("4_lfcma")
@@ -115,7 +119,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_ddhmo"]
 resource_name = "idle"
-length = 0.2
+length = 0.4
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -124,10 +128,10 @@ tracks/0/path = NodePath("Body:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [7]
+"values": [8, 9, 10, 11]
 }
 
 [sub_resource type="Animation" id="Animation_hnuck"]
@@ -266,10 +270,12 @@ script = ExtResource("3_hvheh")
 
 [node name="Skills" type="Node" parent="."]
 
-[node name="AmeTeleport" type="Node" parent="Skills" node_paths=PackedStringArray("rect")]
+[node name="AmeTeleport" type="Node" parent="Skills" node_paths=PackedStringArray("rect", "player_effect")]
 script = ExtResource("2_dyrvv")
 teleport_distance = 150
 rect = NodePath("ColorRect")
+teleport_effect = ExtResource("53_6762e")
+player_effect = NodePath("../../TeleportEffect")
 icon = ExtResource("4_wiw8t")
 cooldown = 2.0
 sound = ExtResource("5_e8kua")
@@ -371,6 +377,7 @@ scale = Vector2(0.1, 0.1)
 texture = ExtResource("9_owcvy")
 
 [node name="Body" type="Sprite2D" parent="."]
+z_index = 1
 material = SubResource("ShaderMaterial_ctc5y")
 position = Vector2(0, -9)
 scale = Vector2(0.4, 0.4)
@@ -378,6 +385,7 @@ texture = ExtResource("1_pkb8e")
 offset = Vector2(0, -23.255)
 flip_h = true
 hframes = 8
+vframes = 2
 
 [node name="HpBar" type="ProgressBar" parent="." node_paths=PackedStringArray("health")]
 custom_minimum_size = Vector2(15, 2)
@@ -398,6 +406,9 @@ health = NodePath("../HurtBox/Health")
 
 [node name="PlayerInput" type="Node" parent="."]
 script = ExtResource("1_k4f7f")
+
+[node name="TeleportEffect" parent="." instance=ExtResource("53_6762e")]
+remove_on_finish = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
@@ -805,17 +816,39 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Gameover/CenterContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 30
 
 [node name="Label" type="Label" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 34
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 48
 text = "Gameover"
 horizontal_alignment = 1
 
-[node name="Restart" type="Button" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
+[node name="Restart" type="TextureButton" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 70)
 layout_mode = 2
-text = "Try again"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("52_ropg4")
+texture_pressed = ExtResource("53_uwqvr")
+texture_hover = ExtResource("54_rm76k")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer/Restart"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+text = "Restart"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="DiceReady" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("42_ot3mv")

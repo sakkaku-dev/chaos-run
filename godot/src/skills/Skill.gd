@@ -2,7 +2,7 @@ class_name Skill
 extends Node
 
 enum Type {
-	AME_TELEPORT,
+	AME_TELEPORT = 1,
 	GURA_SHARK_DIVE,
 	KIARA_SWORD_SHIELD,
 	CALLI_SCYTHE,

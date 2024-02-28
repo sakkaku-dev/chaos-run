@@ -1,6 +1,6 @@
 extends Node
 
-var log_level := Logger.Level.DEBUG
+var log_level := Logger.Level.TRACE
 var version := "dev"
 var _logger := Logger.new("Env")
 var _demo := false

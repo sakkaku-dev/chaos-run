@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 signal attack_finish()
 
-@export var initial_force := 500
-@export var deaccel := 800
+@export var initial_force := 700
+@export var deaccel := 1000
 
 @onready var hit_box = $HitBox
 
@@ -21,4 +21,5 @@ func _physics_process(delta):
 		queue_free()
 
 func apply(hit_resource: HitBoxAttackResource):
-	hit_box.apply(hit_resource)
+	await hit_box.apply(hit_resource)
+	hit_box.attack()

@@ -20,7 +20,7 @@ bg_color = Color(0, 0, 0, 0)
 
 [resource]
 default_font = ExtResource("1_jq0pb")
-default_font_size = 12
+default_font_size = 24
 Button/colors/font_color = Color(0.8, 0.8, 0.8, 0.8)
 Button/colors/font_color_focus = Color(1, 1, 1, 1)
 Button/colors/font_color_hover = Color(1, 1, 1, 1)
